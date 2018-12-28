@@ -8,9 +8,9 @@ const api = {
 		Password: item.password
 	}),
 	//登陆用户信息
-	getUserProfile: (id) => request.get(`${api_url}/v1/admin/users/profile`),
+	getUserProfile: () => request.get(`${api_url}/v1/admin/users/profile`),
 	//首页
-	getIndex: (id) => request.get(`${api_url}/v1/`),
+	getIndex: () => request.get(`${api_url}/v1/`),
 	/*---------------- 设置 -----------------*/
 	//编辑用户
 	putAdmins: (form) => request.put(`${api_url}/v1/users/${form.id}`, {
@@ -65,7 +65,7 @@ const api = {
 	getRolesDetail: (id) => request.get(`${api_url}/v1/roles/${id}`),
 	/*----------------账号管理-------------------*/
 	//账号列表
-	getAdmins: () => request.get(`${api_url}/v1/admins`),
+	getAdmins: () => request.get(`${api_url}/v1/admin/users`),
 	//新建账号
 	postAdmins: (form) => request.post(`${api_url}/v1/admins`, {
 		password: form.password,

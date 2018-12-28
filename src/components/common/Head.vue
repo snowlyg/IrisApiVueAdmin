@@ -8,7 +8,7 @@
 			<el-dropdown class="user_d" @command="handleCommand">
 				<span class="el-dropdown-link">
 					<img src="../../assets/index-head.png" class="user_d-img"/>
-           			{{UserProfile.name}}
+           			{{UserProfile.Name}}
            			<i class="el-icon-arrow-down el-icon--right"></i>
           		</span>
 				<el-dropdown-menu slot="dropdown">

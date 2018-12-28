@@ -6,35 +6,26 @@
 				<el-row slot="custom-tool-bar" style="margin-bottom: 10px" class="class_el_row">
 					<el-col :span="24" class="text-align-left">
 						<el-button type="primary" @click="goSeed">新建账号</el-button>
-						<el-select v-model="customFilters[1].vals" placeholder="微信绑定" class="class_select_width">
-							<el-option label="微信绑定" value=""></el-option>
-							<div v-for="status in allstatus">
-								<el-option :label="status.name" :value="status.value"></el-option>
-							</div>
-						</el-select>
+
 						<el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索姓名/账号名" class="class_input_width">
 						</el-input>
 					</el-col>
 				</el-row>
-				<el-table-column prop="username" label="姓名" key="username" sortable="custom">
+				<el-table-column prop="Username" label="姓名" key="Username" sortable="custom">
 					<template slot-scope="scope">
-						<div class="blue cursor" @click="details(scope)"><b>{{scope.row.username}}</b></div>
+						<div class="blue cursor" @click="details(scope)"><b>{{scope.row.Username}}</b></div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="name" label="账号名" key="name" sortable="custom">
+				<el-table-column prop="Name" label="账号名" key="Name" sortable="custom">
 				</el-table-column>
-				<el-table-column prop="is_wechat_verfiy" label="微信绑定" key="is_wechat_verfiy" sortable="custom">
-					<template slot-scope="scope">
-						<div class="red" v-if="scope.row.is_wechat_verfiy == '未绑定'">{{scope.row.is_wechat_verfiy}}</div>
-						<div class="green" v-else>{{scope.row.is_wechat_verfiy}}</div>
-					</template>
-				</el-table-column>
-				<el-table-column prop="phone" label="手机号" key="phone" sortable="custom">
-				</el-table-column>
+
 				<el-table-column prop="roles" label="角色" key="roles" sortable="custom">
 					<template slot-scope="scope">
-						<div v-if="scope.row.roles.data[0]">
+						<div v-if="scope.row.roles">
 							{{scope.row.roles.data[0].display_name}}
+						</div>
+            <div v-else>
+							暂无角色
 						</div>
 					</template>
 				</el-table-column>
@@ -42,9 +33,6 @@
 					<template slot-scope="scope">
 						<div class="operation_box">
 							<span @click="edit(scope.row)">编辑</span>
-							<span v-if="!scope.row.is_frozen" @click="frozen(scope.row)">冻结</span>
-							<span v-else @click="frozen(scope.row)">解冻</span>
-							<span v-if="!scope.row.is_audit" @click="audit(scope.row)">设置负责人</span>
 							<span @click="deletes(scope.row)">删除</span>
 						</div>
 					</template>
@@ -58,7 +46,7 @@
 						<p>姓名</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.username}}</p>
+						<p>{{colshowlog.Username}}</p>
 					</div>
 				</div>
 				<div class="cl-row">
@@ -66,32 +54,7 @@
 						<p>账号名</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.name}}</p>
-					</div>
-				</div>
-				<div class="cl-row">
-					<div class="cl-td">
-						<p>手机号</p>
-					</div>
-					<div class="cl-td">
-						<p>{{colshowlog.phone}}</p>
-					</div>
-				</div>
-				<div class="cl-row">
-					<div class="cl-td">
-						<p>关联状态</p>
-					</div>
-					<div class="cl-td">
-						<p v-if="colshowlog.is_wechat_verfiy == '已绑定'">已关联</p>
-						<p v-else>未关联</p>
-					</div>
-				</div>
-				<div class="cl-row">
-					<div class="cl-td">
-						<p>关联时间</p>
-					</div>
-					<div class="cl-td">
-						<p>{{colshowlog.wechat_verfiy_time}}</p>
+						<p>{{colshowlog.Name}}</p>
 					</div>
 				</div>
 				<div class="cl-row">
@@ -101,13 +64,16 @@
 					<div class="cl-td" v-if="colshowlog.roles">
 						<p>{{colshowlog.roles.data[0].name}}</p>
 					</div>
+          <div class="cl-td" v-else>
+						<p>暂无角色</p>
+					</div>
 				</div>
 				<div class="cl-row">
 					<div class="cl-td">
 						<p>创建时间</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.created_at}}</p>
+						<p>{{colshowlog.CreatedAt}}</p>
 					</div>
 				</div>
 			</div>
@@ -135,23 +101,13 @@
 				},
 				customFilters: [{
 					vals: '',
-					props: ['username', 'name'],
-				}, {
-					vals: '',
-					props: ['is_wechat_verfiy']
-				}, {
+					props: ['Username', 'Name'],
+				},  {
 					vals: []
 				}, {
 					vals: []
 				}, {
 					vals: []
-				}],
-				allstatus: [{
-					name: '未绑定',
-					value: '未绑定'
-				}, {
-					name: '已绑定',
-					value: '已绑定'
 				}],
 				//分页设置
 				paginationDef: {
@@ -182,61 +138,6 @@
 				}).then(async() => {
 					this.loading = true
 					const data = await api.deleteAdmins(row.id)
-					if(data.status) {
-						this.$message({
-							message: data.msg,
-							type: 'success'
-						})
-					} else {
-						this.$message.error(data.msg)
-					}
-					this.getData()
-					this.loading = false
-				}).catch(() => {
-
-				})
-			},
-			frozen(row) {
-				let check_frozen = ''
-				if(!row.is_frozen) {
-					check_frozen = '冻结'
-				} else {
-					check_frozen = '解冻'
-				}
-				this.$confirm(`真的要${check_frozen}此账号吗？`, `${check_frozen}`, {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(async() => {
-					this.loading = true
-					let data = ''
-					if(!row.is_frozen) {
-						data = await api.putFrozenAdmins(row.id)
-					} else {
-						data = await api.putRefrozenAdmins(row.id)
-					}
-					if(data.status) {
-						this.$message({
-							message: data.msg,
-							type: 'success'
-						})
-					} else {
-						this.$message.error(data.msg)
-					}
-					this.getData()
-					this.loading = false
-				}).catch(() => {
-
-				})
-			},
-			audit(row) {
-				this.$confirm(`真的要设置此账号为负责人吗？`, `设置`, {
-					confirmButtonText: '确定',
-					cancelButtonText: '取消',
-					type: 'warning'
-				}).then(async() => {
-					this.loading = true
-					const data = await api.putUsersAudit(row.id)
 					if(data.status) {
 						this.$message({
 							message: data.msg,
@@ -303,11 +204,11 @@
 			}
 		}
 	}
-	
+
 	.class_input_width {
 		width: 350px;
 	}
-	
+
 	.operation_box span {
 		cursor: pointer;
 		color: #8E9EBB;
