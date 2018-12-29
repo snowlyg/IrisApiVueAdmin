@@ -2,7 +2,7 @@
 	<div class='loginBox'>
 		<div class="login_main">
 			<div class='login'>
-			<h1 style="color: #3fbf4c">IrisApiProject</h1>
+			<h1 style="color: #002446">IrisApiProject</h1>
 				<h3 class="logoText">develop from snowlyg</h3>
 				<div class="form text-center loginForm">
 					<el-row>

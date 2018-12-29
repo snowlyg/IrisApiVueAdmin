@@ -8,28 +8,24 @@
 				<el-form @submit.native.prevent class="margin-top-lg" :label-position="labelPosition" label-width="130px" :model="ruleForm" ref="ruleForm" :rules="rules">
 
 					<el-form-item prop="username" class="margin-left-lg margin-top must" label="姓名">
-						<el-input class="form-input-h" v-model="ruleForm.username" placeholder="请输入"></el-input>
+						<el-input class="form-input-h" v-model="ruleForm.Username" placeholder="请输入"></el-input>
 						<p class="form_p_g">输入账号使用者的姓名！</p>
 					</el-form-item>
 
 					<el-form-item prop="name" class="margin-left-lg margin-top must" label="账号名">
-						<el-input class="form-input-h" v-model="ruleForm.name" placeholder="请输入"></el-input>
+						<el-input class="form-input-h" v-model="ruleForm.Name" placeholder="请输入"></el-input>
 						<p class="form_p_g">输入账号名，用于后台登录！</p>
 					</el-form-item>
 
 					<el-form-item prop="password" class="margin-left-lg margin-top must" label="密码">
-						<el-input class="form-input-h" v-model="ruleForm.password" placeholder="请输入" maxlength="20" type="password"></el-input>
+						<el-input class="form-input-h" v-model="ruleForm.Password" placeholder="请输入" maxlength="20" type="password"></el-input>
 						<p class="form_p_g">输入账号的密码，6-20位字符不限！</p>
 					</el-form-item>
 
-					<el-form-item prop="phone" class="margin-left-lg margin-top must" label="手机号">
-						<el-input class="form-input-h" v-model="ruleForm.phone" placeholder="请输入" @input="checkNo" maxlength="11"></el-input>
-						<p class="form_p_g">填写11位手机号，顾问认证时，会作为认证匹配的条件</p>
-					</el-form-item>
 
 					<el-form-item label="选择角色" prop="role_id" class="margin-left-lg margin-top must">
-						<el-select v-model="ruleForm.role_id" placeholder="请选择角色">
-							<el-option v-for="item,index in RolesData" :key="index" :label="item.display_name" :value="item.id"></el-option>
+						<el-select v-model="ruleForm.RoleId" placeholder="请选择角色">
+							<el-option v-for="item,index in RolesData" :key="index" :label="item.DisplayName" :value="item.ID"></el-option>
 						</el-select>
 					</el-form-item>
 
@@ -49,15 +45,9 @@
 	import { getCookie } from '@/utils'
 	export default {
 		data() {
-			var validatePass2 = (rule, value, callback) => {
-				if(!(/^(13[0-9]|14[5-9]|15[012356789]|166|17[0-8]|18[0-9]|19[8-9])[0-9]{8}$/.test(value))) {
-					callback(new Error('请正确输入手机号'))
-				} else {
-					callback()
-				}
-			}
+
 			var validatePass3 = (rule, value, callback) => {
-				if(this.$route.params.id){
+				if(this.$route.params.ID){
 					callback()
 				}
 				if(value.length <6) {
@@ -70,35 +60,29 @@
 				data: [],
 				labelPosition: 'right',
 				ruleForm: {
-					username: '',
-					name: '',
-					password: '',
-					phone: '',
-					role_id: '',
-					id: this.$route.params.id
+					Username: '',
+					Name: '',
+					Password: '',
+					RoleId: '',
+					ID: this.$route.params.ID
 				},
 				rules: {
-					username: [{
+          Username: [{
 						required: true,
 						message: '请输入姓名',
 						trigger: 'blur'
 					}],
-					name: [{
+					Name: [{
 						required: true,
 						message: '请输入账号名',
 						trigger: 'blur'
 					}],
-					password: [{
+					Password: [{
 						required: true,
 						validator: validatePass3,
 						trigger: 'blur'
 					}],
-					phone: [{
-						required: true,
-						validator: validatePass2,
-						trigger: 'blur'
-					}],
-					role_id: [{
+          RoleId: [{
 						required: true,
 						message: '请选择角色',
 						trigger: 'change'
@@ -118,15 +102,15 @@
 				'getRoles'
 			]),
 			async getData() {
+
 				if(this.$route.params.id) {
 					this.loading = true
 					const data = await api.getAdminsDetail(this.$route.params.id)
 					await this.getRoles()
-					this.ruleForm.username = data.data.username
-					this.ruleForm.name = data.data.name
-					this.ruleForm.phone = data.data.phone
-					if(data.data.roles.data.length > 0){
-						this.ruleForm.role_id = data.data.roles.data[0].id
+					this.ruleForm.Username = data.data.Username
+					this.ruleForm.Name = data.data.Name
+					if(data.roles){
+						this.ruleForm.RoleId = data.roles.data[0].ID
 					}
 				} else {
 					await this.getRoles()
@@ -136,7 +120,7 @@
 			},
 			//提交表单
 			submitForm(formName) {
-				let id = this.$route.params.id;
+				let id = this.$route.params.ID;
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						if(id) {
@@ -171,8 +155,8 @@
 			},
 			async putAdmins() {
 				this.loading = true
-				if(this.ruleForm.password == ''){
-					delete this.ruleForm.password
+				if(this.ruleForm.Password == ''){
+					delete this.ruleForm.Password
 				}
 				const data = await api.putAdmins(this.ruleForm)
 				if(data.status) {
@@ -209,13 +193,6 @@
 					this.$router.go(-1)
 				}
 			},
-			checkNo(value) {
-				if(value) {
-					this.$nextTick(() => {
-						this.ruleForm.phone = this.$valid.onlynumber(value)
-					});
-				}
-			}
 		},
 		mounted: function() {
 			this.getData()
@@ -245,13 +222,13 @@
 	.form-input-h {
 		width: 400px
 	}
-	
+
 	.form_p_g {
 		font-size: 14px;
 		color: #888;
 		clear: both
 	}
-	
+
 	.tree-box {
 		margin-top: 10px;
 		border: 1px solid #E3E3E3;
@@ -260,7 +237,7 @@
 		padding: 10px;
 		min-height: 220px
 	}
-	
+
 	.avatar-uploader {
 		border: 1px dashed #d9d9d9;
 		border-radius: 6px;
@@ -270,11 +247,11 @@
 		display: inline-block;
 		line-height: 1
 	}
-	
+
 	.avatar-uploader:hover {
 		border-color: #409EFF
 	}
-	
+
 	.avatar-uploader-icon {
 		font-size: 28px;
 		color: #8c939d;
@@ -283,13 +260,13 @@
 		line-height: 100px;
 		text-align: center
 	}
-	
+
 	.avatar {
 		width: 100px;
 		height: 100px;
 		display: block
 	}
-	
+
 	.colrecom_form {
 		width: 200px;
 		border: 1px solid #ccc;
@@ -301,7 +278,7 @@
 		height: 141px;
 		border-radius: 4px
 	}
-	
+
 	.colrecom_form_add {
 		width: 200px;
 		border: 1px dotted #ccc;
@@ -314,15 +291,15 @@
 		text-align: center;
 		border-radius: 4px
 	}
-	
+
 	.colrecom_form_add>.el-icon-plus {
 		height: 80px
 	}
-	
+
 	.colrecom_form>img {
 		width: 100%
 	}
-	
+
 	.colrecom_form>p {
 		line-height: normal;
 		text-align: center;
@@ -333,7 +310,7 @@
 		overflow: hidden;
 		text-align: justify
 	}
-	
+
 	.colrecom_form>.el-icon-error {
 		color: #ff7043;
 		position: absolute;
@@ -341,21 +318,21 @@
 		right: -7px;
 		font-size: 18px
 	}
-	
+
 	.input_search_video {
 		width: 50%
 	}
-	
+
 	.span_search_video {
 		color: #888;
 		margin-left: 5%
 	}
-	
+
 	.select_show_video {
 		width: 685px;
 		margin: 0 auto
 	}
-	
+
 	.show_page {
 		margin-top: 2rem;
 		text-align: center

@@ -22,7 +22,7 @@
 				<el-table-column prop="roles" label="角色" key="roles" sortable="custom">
 					<template slot-scope="scope">
 						<div v-if="scope.row.roles">
-							{{scope.row.roles.data[0].display_name}}
+							{{scope.row.roles.data[0].DisplayName}}
 						</div>
             <div v-else>
 							暂无角色
@@ -62,7 +62,7 @@
 						<p>角色</p>
 					</div>
 					<div class="cl-td" v-if="colshowlog.roles">
-						<p>{{colshowlog.roles.data[0].name}}</p>
+						<p>{{colshowlog.roles.data[0].Name}}</p>
 					</div>
           <div class="cl-td" v-else>
 						<p>暂无角色</p>
@@ -137,7 +137,7 @@
 					type: 'warning'
 				}).then(async() => {
 					this.loading = true
-					const data = await api.deleteAdmins(row.id)
+					const data = await api.deleteAdmins(row.ID)
 					if(data.status) {
 						this.$message({
 							message: data.msg,
@@ -172,7 +172,7 @@
 				this.$router.push({
 					name: 'EditUsers',
 					params: {
-						id: row.id
+						id: row.ID
 					}
 				})
 			}

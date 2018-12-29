@@ -8,12 +8,12 @@
 				<el-form @submit.native.prevent class="margin-top-lg" :label-position="labelPosition" label-width="130px" :model="ruleForm" ref="ruleForm" :rules="rules">
 
 					<el-form-item prop="display_name" class="margin-left-lg margin-top must" label="角色名">
-						<el-input class="form-input-h" v-model="ruleForm.display_name" placeholder="请输入"></el-input>
+						<el-input class="form-input-h" v-model="ruleForm.DisplayName" placeholder="请输入"></el-input>
 						<p class="form_p_g">给角色起个名字吧！</p>
 					</el-form-item>
 
 					<el-form-item prop="name" class="margin-left-lg margin-top must" label="标识">
-						<el-input class="form-input-h" v-model="ruleForm.name" placeholder="请输入"></el-input>
+						<el-input class="form-input-h" v-model="ruleForm.Name" placeholder="请输入"></el-input>
 						<p class="form_p_g">为角色起个标识！</p>
 					</el-form-item>
 
@@ -54,17 +54,17 @@
 				labelPosition: 'right',
 				per_ids: [],
 				ruleForm: {
-					display_name: '',
-					name: '',
-					id: this.$route.params.id
+					DisplayName: '',
+					Name: '',
+					ID: this.$route.params.id
 				},
 				rules: {
-					display_name: [{
+          DisplayName: [{
 						required: true,
 						message: '请输入角色名',
 						trigger: 'blur'
 					}],
-					name: [{
+          Name: [{
 						required: true,
 						message: '请输入标识',
 						trigger: 'blur'
@@ -99,14 +99,16 @@
 					const data2 = await api.getPermissions()
 					this.data = data2.data
 					this.ruleForm = data.data
-					data.data.permissions.data.forEach(e => {
-						this.per_ids.push(e.id)
-					})
+         if(data.data.permissions){
+           data.data.permissions.data.forEach(e => {
+             this.per_ids.push(e.ID)
+           })
+         }
 				} else {
 					const data2 = await api.getPermissions()
 					this.data = data2.data
 					this.data.forEach(e => {
-						this.per_ids.push(e.id)
+						this.per_ids.push(e.ID)
 					})
 				}
 
@@ -215,13 +217,13 @@
 	.form-input-h {
 		width: 400px
 	}
-	
+
 	.form_p_g {
 		font-size: 14px;
 		color: #888;
 		clear: both
 	}
-	
+
 	.tree-box {
 		margin-top: 10px;
 		border: 1px solid #E3E3E3;
@@ -232,7 +234,7 @@
 		max-height: 500px;
 		overflow: scroll;
 	}
-	
+
 	.avatar-uploader {
 		border: 1px dashed #d9d9d9;
 		border-radius: 6px;
@@ -242,11 +244,11 @@
 		display: inline-block;
 		line-height: 1
 	}
-	
+
 	.avatar-uploader:hover {
 		border-color: #409EFF
 	}
-	
+
 	.avatar-uploader-icon {
 		font-size: 28px;
 		color: #8c939d;
@@ -255,13 +257,13 @@
 		line-height: 100px;
 		text-align: center
 	}
-	
+
 	.avatar {
 		width: 100px;
 		height: 100px;
 		display: block
 	}
-	
+
 	.colrecom_form {
 		width: 200px;
 		border: 1px solid #ccc;
@@ -273,7 +275,7 @@
 		height: 141px;
 		border-radius: 4px
 	}
-	
+
 	.colrecom_form_add {
 		width: 200px;
 		border: 1px dotted #ccc;
@@ -286,15 +288,15 @@
 		text-align: center;
 		border-radius: 4px
 	}
-	
+
 	.colrecom_form_add>.el-icon-plus {
 		height: 80px
 	}
-	
+
 	.colrecom_form>img {
 		width: 100%
 	}
-	
+
 	.colrecom_form>p {
 		line-height: normal;
 		text-align: center;
@@ -305,7 +307,7 @@
 		overflow: hidden;
 		text-align: justify
 	}
-	
+
 	.colrecom_form>.el-icon-error {
 		color: #ff7043;
 		position: absolute;
@@ -313,21 +315,21 @@
 		right: -7px;
 		font-size: 18px
 	}
-	
+
 	.input_search_video {
 		width: 50%
 	}
-	
+
 	.span_search_video {
 		color: #888;
 		margin-left: 5%
 	}
-	
+
 	.select_show_video {
 		width: 685px;
 		margin: 0 auto
 	}
-	
+
 	.show_page {
 		margin-top: 2rem;
 		text-align: center

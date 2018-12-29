@@ -91,38 +91,13 @@
 		},
 		methods: {
 			...mapActions([
-				'getIndex'
+
 			]),
-			async getData() {
-				if(this.IndexData.length == 0) {
-					this.loading = true
-				}
-				await this.getIndex()
-				this.loading = false
-			},
-			NewOrder() {
-				this.$router.push({
-					name: 'SelectPlan'
-				})
-			},
-			NewPlan() {
-				this.$router.push({
-					name: 'AddDiagnose'
-				})
-			},
-			NewKe() {
-				this.$router.push({
-					name: 'AddCustomer'
-				})
-			},
-			NewLink() {
-				this.$router.push({
-					name: 'AddCustomerContact'
-				})
-			}
+
+
 		},
 		mounted() {
-			this.getData()
+
 		}
 	}
 </script>

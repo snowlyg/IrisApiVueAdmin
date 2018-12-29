@@ -38,13 +38,7 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
-		async getIndex({
-			state,
-			commit
-		}) {
-			const data = await api.getIndex()
-			commit('IndexData', data.data)
-		},
+
 		async getUserProfile({
 			state,
 			commit

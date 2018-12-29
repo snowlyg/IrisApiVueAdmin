@@ -10,14 +10,14 @@
 						</el-input>
 					</el-col>
 				</el-row>
-				<el-table-column prop="display_name" label="角色名称" key="display_name" sortable="custom">
+				<el-table-column prop="DisplayName" label="角色名称" key="DisplayName" sortable="custom">
 					<template slot-scope="scope">
-						<div class="blue cursor" @click="details(scope)"><b>{{scope.row.display_name}}</b></div>
+						<div class="blue cursor" @click="details(scope)"><b>{{scope.row.DisplayName}}</b></div>
 					</template>
 				</el-table-column>
-				<el-table-column prop="name" label="标识" key="name" sortable="custom">
+				<el-table-column prop="Name" label="标识" key="Name" sortable="custom">
 				</el-table-column>
-				<el-table-column prop="created_at" label="创建时间" key="created_at" sortable="custom">
+				<el-table-column prop="CreatedAt" label="创建时间" key="CreatedAt" sortable="custom">
 				</el-table-column>
 				<el-table-column label="操作">
 					<template slot-scope="scope">
@@ -36,7 +36,7 @@
 						<p>角色名称</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.display_name}}</p>
+						<p>{{colshowlog.DisplayName}}</p>
 					</div>
 				</div>
 				<div class="cl-row">
@@ -44,7 +44,7 @@
 						<p>标识</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.name}}</p>
+						<p>{{colshowlog.Name}}</p>
 					</div>
 				</div>
 				<div class="cl-row">
@@ -52,7 +52,7 @@
 						<p>创建时间</p>
 					</div>
 					<div class="cl-td">
-						<p>{{colshowlog.created_at}}</p>
+						<p>{{colshowlog.CreatedAt}}</p>
 					</div>
 				</div>
 			</div>
@@ -80,7 +80,7 @@
 				},
 				customFilters: [{
 					vals: '',
-					props: ['display_name', 'name'],
+					props: ['DisplayName', 'Name'],
 				}, {
 					vals: []
 				}, {
@@ -118,7 +118,7 @@
 					type: 'warning'
 				}).then(async () => {
 					this.loading = true
-					const data = await api.deleteRoles(row.id)
+					const data = await api.deleteRoles(row.ID)
 					if(data.status) {
 						this.$message({
 							message: data.msg,
@@ -153,7 +153,7 @@
 				this.$router.push({
 					name: 'EditRole',
 					params: {
-						id: row.id
+						id: row.ID
 					}
 				})
 			}
@@ -185,11 +185,11 @@
 			}
 		}
 	}
-	
+
 	.class_input_width {
 		width: 350px;
 	}
-	
+
 	.operation_box span {
 		cursor: pointer;
 		color: #8E9EBB;
