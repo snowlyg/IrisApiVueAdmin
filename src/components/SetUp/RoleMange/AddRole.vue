@@ -7,12 +7,12 @@
 			<div class="auditDaka">
 				<el-form @submit.native.prevent class="margin-top-lg" :label-position="labelPosition" label-width="130px" :model="ruleForm" ref="ruleForm" :rules="rules">
 
-					<el-form-item prop="display_name" class="margin-left-lg margin-top must" label="角色名">
+					<el-form-item prop="DisplayName" class="margin-left-lg margin-top must" label="角色名">
 						<el-input class="form-input-h" v-model="ruleForm.DisplayName" placeholder="请输入"></el-input>
 						<p class="form_p_g">给角色起个名字吧！</p>
 					</el-form-item>
 
-					<el-form-item prop="name" class="margin-left-lg margin-top must" label="标识">
+					<el-form-item prop="Name" class="margin-left-lg margin-top must" label="标识">
 						<el-input class="form-input-h" v-model="ruleForm.Name" placeholder="请输入"></el-input>
 						<p class="form_p_g">为角色起个标识！</p>
 					</el-form-item>
@@ -79,7 +79,7 @@
 				resetdata: false,
 				defaultProps: {
 					children: 'children',
-					label: 'description'
+					label: 'Description'
 				},
 			}
 		},
@@ -99,8 +99,8 @@
 					const data2 = await api.getPermissions()
 					this.data = data2.data
 					this.ruleForm = data.data
-         if(data.data.permissions){
-           data.data.permissions.data.forEach(e => {
+         if(data.data.Permissions){
+           data.data.Permissions.data.forEach(e => {
              this.per_ids.push(e.ID)
            })
          }

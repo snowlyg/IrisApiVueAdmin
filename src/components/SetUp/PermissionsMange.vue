@@ -17,7 +17,7 @@
 				</el-table-column>
 				<el-table-column prop="Name" label="路由" key="Name" sortable="custom">
 				</el-table-column>
-				<el-table-column prop="created_at" label="创建时间" key="CreatedAt" sortable="custom">
+				<el-table-column prop="CreatedAt" label="创建时间" key="CreatedAt" sortable="custom">
 				</el-table-column>
 				<el-table-column label="操作">
 					<template slot-scope="scope">

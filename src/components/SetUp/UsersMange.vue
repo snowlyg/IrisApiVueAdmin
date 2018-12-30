@@ -19,10 +19,10 @@
 				<el-table-column prop="Name" label="账号名" key="Name" sortable="custom">
 				</el-table-column>
 
-				<el-table-column prop="roles" label="角色" key="roles" sortable="custom">
+				<el-table-column prop="Role" label="角色" key="Role" sortable="custom">
 					<template slot-scope="scope">
-						<div v-if="scope.row.roles">
-							{{scope.row.roles.data[0].DisplayName}}
+						<div v-if="scope.row.RoleID">
+							{{scope.row.Role.DisplayName}}
 						</div>
             <div v-else>
 							暂无角色
@@ -61,8 +61,8 @@
 					<div class="cl-td">
 						<p>角色</p>
 					</div>
-					<div class="cl-td" v-if="colshowlog.roles">
-						<p>{{colshowlog.roles.data[0].Name}}</p>
+					<div class="cl-td" v-if="colshowlog.RoleID">
+						<p>{{colshowlog.Role.DisplayName}}</p>
 					</div>
           <div class="cl-td" v-else>
 						<p>暂无角色</p>

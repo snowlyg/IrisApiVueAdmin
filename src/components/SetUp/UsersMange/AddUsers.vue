@@ -23,8 +23,8 @@
 					</el-form-item>
 
 
-					<el-form-item label="选择角色" prop="role_id" class="margin-left-lg margin-top must">
-						<el-select v-model="ruleForm.RoleId" placeholder="请选择角色">
+					<el-form-item label="选择角色" prop="RoleID" class="margin-left-lg margin-top must">
+						<el-select v-model="ruleForm.RoleID" placeholder="请选择角色">
 							<el-option v-for="item,index in RolesData" :key="index" :label="item.DisplayName" :value="item.ID"></el-option>
 						</el-select>
 					</el-form-item>
@@ -47,7 +47,7 @@
 		data() {
 
 			var validatePass3 = (rule, value, callback) => {
-				if(this.$route.params.ID){
+				if(this.$route.params.id){
 					callback()
 				}
 				if(value.length <6) {
@@ -63,8 +63,8 @@
 					Username: '',
 					Name: '',
 					Password: '',
-					RoleId: '',
-					ID: this.$route.params.ID
+          RoleID: '',
+					ID: this.$route.params.id
 				},
 				rules: {
           Username: [{
@@ -82,7 +82,7 @@
 						validator: validatePass3,
 						trigger: 'blur'
 					}],
-          RoleId: [{
+          RoleID: [{
 						required: true,
 						message: '请选择角色',
 						trigger: 'change'
@@ -109,9 +109,8 @@
 					await this.getRoles()
 					this.ruleForm.Username = data.data.Username
 					this.ruleForm.Name = data.data.Name
-					if(data.roles){
-						this.ruleForm.RoleId = data.roles.data[0].ID
-					}
+          this.ruleForm.RoleID = data.data.RoleID
+
 				} else {
 					await this.getRoles()
 				}
@@ -120,7 +119,7 @@
 			},
 			//提交表单
 			submitForm(formName) {
-				let id = this.$route.params.ID;
+				let id = this.$route.params.id;
 				this.$refs[formName].validate((valid) => {
 					if(valid) {
 						if(id) {
