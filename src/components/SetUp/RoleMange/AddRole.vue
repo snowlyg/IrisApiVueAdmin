@@ -21,7 +21,7 @@
 						<div class="tree-box">
 							<!--  :default-expanded-keys="[2, 3]" -->
 							<!-- 默认展开的的节点 -->
-							<el-tree ref="tree" :data="data" show-checkbox node-key="id" :props="defaultProps" :default-checked-keys="per_ids">
+							<el-tree ref="tree" :data="data" show-checkbox node-key="ID" :props="defaultProps" :default-checked-keys="per_ids">
 							</el-tree>
 						</div>
 					</el-form-item>
@@ -99,8 +99,9 @@
 					const data2 = await api.getPermissions()
 					this.data = data2.data
 					this.ruleForm = data.data
-         if(data.data.Permissions){
-           data.data.Permissions.data.forEach(e => {
+
+         if(data.data.Perms){
+           data.data.Perms.forEach(e => {
              this.per_ids.push(e.ID)
            })
          }
