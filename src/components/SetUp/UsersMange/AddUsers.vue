@@ -7,17 +7,17 @@
 			<div class="auditDaka">
 				<el-form @submit.native.prevent class="margin-top-lg" :label-position="labelPosition" label-width="130px" :model="ruleForm" ref="ruleForm" :rules="rules">
 
-					<el-form-item prop="username" class="margin-left-lg margin-top must" label="姓名">
+					<el-form-item prop="Username" class="margin-left-lg margin-top must" label="姓名">
 						<el-input class="form-input-h" v-model="ruleForm.Username" placeholder="请输入"></el-input>
 						<p class="form_p_g">输入账号使用者的姓名！</p>
 					</el-form-item>
 
-					<el-form-item prop="name" class="margin-left-lg margin-top must" label="账号名">
+					<el-form-item prop="Name" class="margin-left-lg margin-top must" label="账号名">
 						<el-input class="form-input-h" v-model="ruleForm.Name" placeholder="请输入"></el-input>
 						<p class="form_p_g">输入账号名，用于后台登录！</p>
 					</el-form-item>
 
-					<el-form-item prop="password" class="margin-left-lg margin-top must" label="密码">
+					<el-form-item prop="Password" class="margin-left-lg margin-top must" label="密码">
 						<el-input class="form-input-h" v-model="ruleForm.Password" placeholder="请输入" maxlength="20" type="password"></el-input>
 						<p class="form_p_g">输入账号的密码，6-20位字符不限！</p>
 					</el-form-item>
@@ -47,9 +47,9 @@
 		data() {
 
 			var validatePass3 = (rule, value, callback) => {
-				if(this.$route.params.id){
-					callback()
-				}
+				// if(this.$route.params.id){
+				// 	callback()
+				// }
 				if(value.length <6) {
 					callback(new Error('请正确输入密码'))
 				} else {
@@ -154,9 +154,9 @@
 			},
 			async putAdmins() {
 				this.loading = true
-				if(this.ruleForm.Password == ''){
-					delete this.ruleForm.Password
-				}
+				// if(this.ruleForm.Password == ''){
+				// 	delete this.ruleForm.Password
+				// }
 				const data = await api.putAdmins(this.ruleForm)
 				if(data.status) {
 					this.$message({

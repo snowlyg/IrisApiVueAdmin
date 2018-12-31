@@ -50,7 +50,7 @@ const api = {
   getRoles: () => request.get(`${api_url}/v1/admin/roles`),
   //新建角色
   postRoles: (form) => request.post(`${api_url}/v1/admin/roles`, {
-    ame: form.Name,
+    name: form.Name,
     display_name: form.DisplayName,
     permissions_ids: form.permissions_ids
   }),
