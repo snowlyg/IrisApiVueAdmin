@@ -11,17 +11,17 @@ const api = {
   //登陆用户信息
   getUserProfile: () => request.get(`${api_url}/v1/admin/users/profile`),
   //首页
-  getIndex: () => request.get(`${api_url}/v1/`),
+  // getIndex: () => request.get(`${api_url}/v1/`),
   /*---------------- 设置 -----------------*/
   //编辑用户
-  putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.id}`, {
-    name: form.name,
-    email: form.email,
-    password: form.password,
-    username: form.username,
-    phone: form.phone,
-    role_id: form.role_id
-  }),
+  // putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.id}`, {
+  //   name: form.name,
+  //   email: form.email,
+  //   password: form.password,
+  //   username: form.username,
+  //   phone: form.phone,
+  //   role_id: form.role_id
+  // }),
   //修改密码
   putUsersPassword: (form) => request.put(`${api_url}/v1/admin/users/${form.id}/password`, {
     password: form.password
