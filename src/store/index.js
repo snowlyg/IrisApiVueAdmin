@@ -8,33 +8,34 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
 		UserProfile: [],
-		PermissionsData: [],
-		RolesData: [],
-		AdminsData: [],
-		FindWechatSettingsData: [],
-		RevisionsData: [],
-		ClientsData: [],
-		CompaniesData: [],
-		PlansData: [],
-		IndexData: [],
-		PlanDepartIndexData: [],
-		EditDiagnose: {
-			activeName: ''
+		PermissionsData: {
+            ListData: [],
+            queryData: {},
+            total: 0
 		},
-		OrdersData: []
+		RolesData: {
+            ListData: [],
+            queryData: {},
+            total: 0
+		},
+		AdminsData: {
+            ListData: [],
+            queryData: {},
+            total: 0
+		},
 	},
 	mutations: {
 		UserProfile(state, data) {
 			state.UserProfile = data
 		},
 		PermissionsData(state, data) {
-			state.PermissionsData = data
+			state.PermissionsData.ListData = data
 		},
 		RolesData(state, data) {
-			state.RolesData = data
+			state.RolesData.ListData = data
 		},
 		AdminsData(state, data) {
-			state.AdminsData = data
+			state.AdminsData.ListData = data
 		}
 	},
 	actions: {
@@ -49,22 +50,22 @@ const store = new Vuex.Store({
 		async getPermissions({
 			state,
 			commit
-		}) {
-			const data = await api.getPermissions()
+		},datas) {
+			const data = await api.getPermissions(datas)
 			commit('PermissionsData', data.data)
 		},
 		async getRoles({
 			state,
 			commit
-		}) {
-			const data = await api.getRoles()
+		},datas) {
+			const data = await api.getRoles(datas)
 			commit('RolesData', data.data)
 		},
 		async getAdmins({
 			state,
 			commit
-		}) {
-			const data = await api.getAdmins()
+		},datas) {
+			const data = await api.getAdmins(datas)
 			commit('AdminsData', data.data)
 		}
 	}

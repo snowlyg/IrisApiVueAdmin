@@ -11,24 +11,24 @@ const api = {
   //登陆用户信息
   getUserProfile: () => request.get(`${api_url}/v1/admin/users/profile`),
   //首页
-  // getIndex: () => request.get(`${api_url}/v1/`),
+  getIndex: () => request.get(`${api_url}/v1/`),
   /*---------------- 设置 -----------------*/
   //编辑用户
-  // putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.id}`, {
-  //   name: form.name,
-  //   email: form.email,
-  //   password: form.password,
-  //   username: form.username,
-  //   phone: form.phone,
-  //   role_id: form.role_id
-  // }),
+  putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.id}`, {
+    name: form.name,
+    email: form.email,
+    password: form.password,
+    username: form.username,
+    phone: form.phone,
+    role_id: form.role_id
+  }),
   //修改密码
   putUsersPassword: (form) => request.put(`${api_url}/v1/admin/users/${form.id}/password`, {
     password: form.password
   }),
   /*----------------权限管理-------------------*/
   //权限列表
-  getPermissions: () => request.get(`${api_url}/v1/admin/permissions`),
+  getPermissions: (datas) => request.get(`${api_url}/v1/admin/permissions`,datas),
   //新建权限
   postPermissions: (form) => request.post(`${api_url}/v1/admin/permissions`, {
     name: form.Name,
@@ -47,7 +47,7 @@ const api = {
   getPermissionsDetail: (id) => request.get(`${api_url}/v1/admin/permissions/${id}`),
   /*----------------角色管理-------------------*/
   //角色列表
-  getRoles: () => request.get(`${api_url}/v1/admin/roles`),
+  getRoles: (datas) => request.get(`${api_url}/v1/admin/roles`,datas),
   //新建角色
   postRoles: (form) => request.post(`${api_url}/v1/admin/roles`, {
     name: form.Name,
@@ -66,7 +66,7 @@ const api = {
   getRolesDetail: (id) => request.get(`${api_url}/v1/admin/roles/${id}`),
   /*----------------账号管理-------------------*/
   //账号列表
-  getAdmins: () => request.get(`${api_url}/v1/admin/users`),
+  getAdmins: (datas) => request.get(`${api_url}/v1/admin/users`,datas),
   //新建账号
   postAdmins: (form) => request.post(`${api_url}/v1/admin/users`, {
     password: form.Password,

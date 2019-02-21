@@ -20,7 +20,7 @@
     "less-loader": "^4.1.0",
     "vue": "^2.5.2",
     "vue-count-to": "^1.0.13",
-    "vue-data-tables": "^3.2.0",
+    "vue-data-tables": "^3.4.4",
     "vue-html5-editor": "^1.1.1",
     "vue-imageview": "^1.0.5",
     "vue-router": "^3.0.1",

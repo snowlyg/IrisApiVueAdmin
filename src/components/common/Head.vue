@@ -2,7 +2,7 @@
 	<div class="header">
 		<div class="logoImg">
 			<div class="logoImg-left">
-				<img src="">
+				<img src="@/assets/logo_top.png">
 				<span style="top: -10px;">IrisApiProject</span>
 			</div>
 			<el-dropdown class="user_d" @command="handleCommand">
