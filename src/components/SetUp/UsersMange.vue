@@ -172,6 +172,7 @@
                 this.AdminsData.queryData = {
                     limit: queryInfo.pageSize,
                     offset: queryInfo.page,
+                    name: this.customFilters[0].vals,
                 }
                 await this.getAdmins(this.AdminsData.queryData);
 

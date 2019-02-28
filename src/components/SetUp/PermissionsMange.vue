@@ -153,6 +153,7 @@
                 this.PermissionsData.queryData = {
                     limit: queryInfo.pageSize,
                     offset: queryInfo.page,
+                    name: this.customFilters[0].vals,
                 }
                 await this.getPermissions(this.PermissionsData.queryData)
                 // await this.getPermissions()
