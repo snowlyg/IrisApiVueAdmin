@@ -4,7 +4,7 @@
             <h1 class="head-title">{{$route.meta.title}}</h1>
             <div class="head-action">
 
-                <el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索姓名/账号名"
+                <el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索账号名"
                           class="class_input_width">
                 </el-input>
                 <el-button type="primary" @click="goSeed">新建账号</el-button>

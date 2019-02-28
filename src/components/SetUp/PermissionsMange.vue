@@ -3,7 +3,7 @@
         <div class="head">
             <h1 class="head-title">{{$route.meta.title}}</h1>
             <div class="head-action">
-                <el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索权限名称/路由"
+                <el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索权限路由"
                           class="class_input_width">
                 </el-input>
                 <el-button type="primary" @click="goSeed">新建权限</el-button>
