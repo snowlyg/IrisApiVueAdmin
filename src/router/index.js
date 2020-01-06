@@ -15,11 +15,11 @@ import AddUsers from '@/components/SetUp/UsersMange/AddUsers'
 
 const parentComponent = {
 	template: `<router-view></router-view>`
-}
-Vue.use(Router)
+};
+Vue.use(Router);
 
 export default new Router({
-	mode: 'history',
+	// mode: 'history',
 	routes: [{
 		path: '',
 		component: Admin,

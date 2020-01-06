@@ -75,12 +75,12 @@ const api = {
     role_id: form.RoleID,
   }),
   //编辑账号
-  putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.ID}`, {
-    password: form.Password,
-    name: form.Name,
-    username: form.Username,
-    role_id: form.RoleID,
-  }),
+  // putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.ID}`, {
+  //   password: form.Password,
+  //   name: form.Name,
+  //   username: form.Username,
+  //   role_id: form.RoleID,
+  // }),
   //删除账号
   deleteAdmins: (id) => request.delete(`${api_url}/v1/admin/users/${id}`),
 

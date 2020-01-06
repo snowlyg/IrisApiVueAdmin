@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '@/utils/api'
-import { setCookie } from '@/utils'
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	state: {
@@ -44,28 +43,28 @@ const store = new Vuex.Store({
 			state,
 			commit
 		}) {
-			const data = await api.getUserProfile()
+			const data = await api.getUserProfile();
 			commit('UserProfile', data.data)
 		},
 		async getPermissions({
 			state,
 			commit
 		},datas) {
-			const data = await api.getPermissions(datas)
+			const data = await api.getPermissions(datas);
 			commit('PermissionsData', data.data)
 		},
 		async getRoles({
 			state,
 			commit
 		},datas) {
-			const data = await api.getRoles(datas)
+			const data = await api.getRoles(datas);
 			commit('RolesData', data.data)
 		},
 		async getAdmins({
 			state,
 			commit
 		},datas) {
-			const data = await api.getAdmins(datas)
+			const data = await api.getAdmins(datas);
 			commit('AdminsData', data.data)
 		}
 	}
