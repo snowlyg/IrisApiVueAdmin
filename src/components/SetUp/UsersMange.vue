@@ -72,7 +72,7 @@
                         <p>角色</p>
                     </div>
                     <div class="cl-td" v-if="colshowlog.RoleID">
-                        <p>{{colshowlog.Role.DisplayName}}</p>
+                        <p>{{colshowlog.RoleName}}</p>
                     </div>
                     <div class="cl-td" v-else>
                         <p>暂无角色</p>
