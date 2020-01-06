@@ -27,22 +27,7 @@
 			return {
 				activeMenu: '',
 				// name用于高亮设置，url用于跳转
-				menus: [{
-					id: 1,
-					name: 'Home',
-					url: 'Home',
-					description: '主页',
-					icon: 'iconfont icon-home',
-					is_show: true
-				}, {
-					id: 2,
-					name: 'Mange',
-					url: 'OrderMange',
-					description: '管理',
-					icon: 'iconfont icon-ic_assignment',
-					is_show: true,
-					children: []
-				}, {
+				menus: [  {
 					id: 6,
 					name: 'SetUp',
 					url: 'PermissionsMange',

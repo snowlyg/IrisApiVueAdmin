@@ -146,11 +146,11 @@
                 if (this.RolesData.length == 0) {
                     this.loading = true
                 }
-                this.RolesData.queryData = {
-                    limit: queryInfo.pageSize,
-                    offset: queryInfo.page,
-                    name: this.customFilters[0].vals,
-                }
+                // this.RolesData.queryData = {
+                //     limit: queryInfo.pageSize,
+                //     offset: queryInfo.page,
+                //     name: this.customFilters[0].vals,
+                // }
                 await this.getRoles(this.RolesData.queryData);
                 this.loading = false
             },

@@ -146,7 +146,7 @@
                     type: 'warning'
                 }).then(async () => {
                     this.loading = true
-                    const data = await api.deleteAdmins(row.ID)
+                    const data = await api.deleteAdmins(row.ID);
                     if (data.status) {
                         this.$message({
                             message: data.msg,
@@ -155,7 +155,7 @@
                     } else {
                         this.$message.error(data.msg)
                     }
-                    this.getData()
+                    this.getData();
                     this.loading = false
                 }).catch(() => {
 
@@ -169,11 +169,11 @@
                 if (this.AdminsData.length == 0) {
                     this.loading = true
                 }
-                this.AdminsData.queryData = {
-                    limit: queryInfo.pageSize,
-                    offset: queryInfo.page,
-                    name: this.customFilters[0].vals,
-                }
+                // this.AdminsData.queryData = {
+                //     limit: queryInfo.pageSize,
+                //     offset: queryInfo.page,
+                //     name: this.customFilters[0].vals,
+                // }
                 await this.getAdmins(this.AdminsData.queryData);
 
                 this.loading = false

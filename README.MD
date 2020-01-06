@@ -1,7 +1,7 @@
 # IrisApiVueAdmin
 
-> IrisApiProject 的前端代码
-> IrisApiProject 地址 https://github.com/snowlyg/IrisApiProject
+> IrisAdminApi 的前端代码
+> IrisAdminApi 地址 https://github.com/snowlyg/IrisAdminApi
 
 ## Build Setup
 
