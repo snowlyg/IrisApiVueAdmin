@@ -18,8 +18,8 @@ npm install
 ##### 复制内容到文件内
 
 ```js
-const api_url = 'http://localhost:80'
-export default api_url
+const api_url = 'http://localhost:80';
+export default api_url;
 
 ```
 

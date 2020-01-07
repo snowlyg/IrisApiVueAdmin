@@ -31,11 +31,8 @@
 
                 <el-table-column prop="Role" label="角色" key="Role" sortable="custom">
                     <template slot-scope="scope">
-                        <div v-if="scope.row.RoleID">
-                            {{scope.row.Role.DisplayName}}
-                        </div>
-                        <div v-else>
-                            暂无角色
+                        <div>
+                            {{scope.row.RoleName}}
                         </div>
                     </template>
                 </el-table-column>
@@ -71,11 +68,8 @@
                     <div class="cl-td">
                         <p>角色</p>
                     </div>
-                    <div class="cl-td" v-if="colshowlog.RoleID">
+                    <div class="cl-td">
                         <p>{{colshowlog.RoleName}}</p>
-                    </div>
-                    <div class="cl-td" v-else>
-                        <p>暂无角色</p>
                     </div>
                 </div>
                 <div class="cl-row">
@@ -169,11 +163,11 @@
                 if (this.AdminsData.length == 0) {
                     this.loading = true
                 }
-                // this.AdminsData.queryData = {
-                //     limit: queryInfo.pageSize,
-                //     offset: queryInfo.page,
-                //     name: this.customFilters[0].vals,
-                // }
+                this.AdminsData.queryData = {
+                    limit: queryInfo.pageSize,
+                    offset: queryInfo.page,
+                    name: this.customFilters[0].vals,
+                }
                 await this.getAdmins(this.AdminsData.queryData);
 
                 this.loading = false

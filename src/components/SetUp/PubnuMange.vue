@@ -69,13 +69,13 @@
 				}
 				this.loading = false
 			},
-			//获取数据 
+			//获取数据
 			async getData() {
 				if(this.FindWechatSettingsData.length == 0) {
 					this.loading = true
 				}
 				await this.getFindWechatSettings()
-				this.ruleForm.index_count = this.FindWechatSettingsData.value
+				this.ruleForm.index_count = this.FindWechatSettingsData.value;
 				this.loading = false
 			},
 			updateData(data) {

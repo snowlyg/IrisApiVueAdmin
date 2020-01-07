@@ -122,8 +122,8 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    this.loading = true
-                    const data = await api.deleteRoles(row.ID)
+                    this.loading = true;
+                    const data = await api.deleteRoles(row.ID);
                     if (data.status) {
                         this.$message({
                             message: data.msg,
@@ -132,25 +132,25 @@
                     } else {
                         this.$message.error(data.msg)
                     }
-                    this.getData()
+                    this.getData();
                     this.loading = false
                 }).catch(() => {
 
                 })
             },
             details(scope) {
-                this.colshowlog = scope.row
+                this.colshowlog = scope.row;
                 this.previewcol = true;
             },
             async getData(queryInfo) {
                 if (this.RolesData.length == 0) {
                     this.loading = true
                 }
-                // this.RolesData.queryData = {
-                //     limit: queryInfo.pageSize,
-                //     offset: queryInfo.page,
-                //     name: this.customFilters[0].vals,
-                // }
+                this.RolesData.queryData = {
+                    limit: queryInfo.pageSize,
+                    offset: queryInfo.page,
+                    name: this.customFilters[0].vals,
+                }
                 await this.getRoles(this.RolesData.queryData);
                 this.loading = false
             },

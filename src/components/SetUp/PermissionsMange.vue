@@ -141,7 +141,7 @@
                 })
             },
             details(scope) {
-                this.colshowlog = scope.row
+                this.colshowlog = scope.row;
                 this.previewcol = true;
             },
             async getData(queryInfo) {
@@ -150,12 +150,12 @@
                     this.loading = true
                 }
 
-                // this.PermissionsData.queryData = {
-                //     limit: queryInfo.pageSize,
-                //     offset: queryInfo.page,
-                //     name: this.customFilters[0].vals,
-                // }
-                await this.getPermissions(this.PermissionsData.queryData)
+                this.PermissionsData.queryData = {
+                    limit: queryInfo.pageSize,
+                    offset: queryInfo.page,
+                    name: this.customFilters[0].vals,
+                }
+                await this.getPermissions(this.PermissionsData.queryData);
                 // await this.getPermissions()
                 this.loading = false
             },
