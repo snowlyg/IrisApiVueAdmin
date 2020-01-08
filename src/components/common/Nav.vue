@@ -31,7 +31,7 @@
 					id: 6,
 					name: 'SetUp',
 					url: 'PermissionsMange',
-					description: '设置',
+					description: '系统设置',
 					icon: 'iconfont icon-settings',
 					is_show: true,
 					children: [{
