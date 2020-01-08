@@ -134,7 +134,7 @@
       },
       async postAdmins() {
         this.loading = true
-        const data = await api.postAdmins(this.ruleForm)
+        const data = await api.postAdmins(this.ruleForm);
         if (data.status) {
           this.$message({
             type: 'success',

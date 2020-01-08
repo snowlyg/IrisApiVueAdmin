@@ -9,31 +9,14 @@
 								<img src="../assets/index-head.png" class="admin-home-img" />
 							</el-col>
 							<el-col :span="19">
-								<p class="admin-home-p1">您好，{{UserProfile.username}}，祝你开心每一天！</p>
+								<p class="admin-home-p1">您好，{{UserProfile.Username}}，祝你开心每一天！</p>
 								<p class="admin-home-p2">欢迎来到，IrisAdminApi</p>
 							</el-col>
 						</el-row>
 					</el-col>
 					<el-col :span="14">
 						<el-row>
-							<el-col :span="4" :offset="12" class="admin-home-cola">
-								<p class="admin-home-p3">订单数</p>
-								<p class="admin-home-p3-num">
-									<countTo :startVal='0' :endVal='IndexData.orders' :duration='1500'></countTo>
-								</p>
-							</el-col>
-							<el-col :span="4" class="admin-home-cola">
-								<p class="admin-home-p3">客户数</p>
-								<p class="admin-home-p3-num">
-									<countTo :startVal='0' :endVal='IndexData.companies' :duration='1500'></countTo>
-								</p>
-							</el-col>
-							<el-col :span="4">
-								<p class="admin-home-p3">客户联系人</p>
-								<p class="admin-home-p3-num">
-									<countTo :startVal='0' :endVal='IndexData.clients' :duration='1500'></countTo>
-								</p>
-							</el-col>
+
 						</el-row>
 					</el-col>
 				</el-row>

@@ -22,33 +22,7 @@ export function removeClass(el, className) {
 	el.className = el.className.replace(reg, ' ')
 }
 
-export function getRect(el) {
-	if(el instanceof window.SVGElement) {
-		let rect = el.getBoundingClientRect()
-		return {
-			top: rect.top,
-			left: rect.left,
-			width: rect.width,
-			height: rect.height
-		}
-	} else {
-		return {
-			top: el.offsetTop,
-			left: el.offsetLeft,
-			width: el.offsetWidth,
-			height: el.offsetHeight
-		}
-	}
-}
 
-export function formatIndexList(list) {
-	const result = []
-	delete list.ret_code
-	for(let key in list) {
-		result.push(list[key]);
-	}
-	return result
-}
 
 export function getCookie(name) {
 	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
@@ -114,63 +88,4 @@ export function scrollLeft(element, endOffset) {
 	scrollTo(element, endOffset, {
 		horizontal: true
 	});
-}
-
-export function getBase64(file, callback) {
-	var maxWidth = 640;
-	if(file.files && file.files[0]) {
-		var thisFile = file.files[0];
-		//		if(thisFile.size > 2019200) {
-		//			// mualert.alertBox("图片不能超过800K");  
-		//			alert("图片不能超过2M");
-		//			return
-		//		};
-		var reader = new FileReader();
-		reader.onload = function(event) {
-			var imgUrl = event.target.result;
-			var img = new Image();
-			img.onload = function() {
-				var canvasId = 'canvasBase64Imgid',
-					canvas = document.getElementById(canvasId);
-				if(canvas != null) {
-					document.body.removeChild(canvas);
-				}
-				var canvas = document.createElement("canvas");
-				canvas.innerHTML = 'New Canvas';
-				canvas.setAttribute("id", canvasId);
-				canvas.style.display = 'none';
-				document.body.appendChild(canvas);
-				canvas.width = this.width;
-				canvas.height = this.height;
-				var imageWidth = this.width,
-					imageHeight = this.height;
-				if(this.width > maxWidth) {
-					imageWidth = maxWidth;
-					imageHeight = this.height * maxWidth / this.width;
-					canvas.width = imageWidth;
-					canvas.height = imageHeight;
-				}
-				var context = canvas.getContext('2d');
-				context.clearRect(0, 0, imageWidth, imageHeight);
-				context.drawImage(this, 0, 0, imageWidth, imageHeight);
-				var base64 = canvas.toDataURL('image/png', 1);
-				var imgbase = base64.substr(22);
-				callback(imgbase)
-				//this.imgUrl =   
-			}
-			img.src = imgUrl;
-		}
-		reader.readAsDataURL(file.files[0]);
-	}
-}
-
-export function formatChildrenNav(nav) {
-	const {
-		name
-	} = nav
-	const id = nav.real_id
-	return {
-		name,
-		id
-	}
 }

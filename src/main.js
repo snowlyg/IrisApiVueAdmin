@@ -10,12 +10,10 @@ import DataTables from 'vue-data-tables'
 import VueHtml5Editor from 'vue-html5-editor' //富文本编辑器
 import {getCookie} from '@/utils'
 import apiUrl from '@/utils/apiUrl'
-import valid from '@/utils/valid'
 
 Vue.use(ElementUI);
 Vue.use(DataTables);
 Vue.config.productionTip = false;
-Vue.prototype.$valid = valid;
 // 设置全局的上传图片路径
 Vue.prototype.$weburl = apiUrl;
 Vue.prototype.$Importurl = Vue.prototype.$weburl + '/v1/admin/';
@@ -28,16 +26,12 @@ const options = {
     "color",
     "font",
     "align",
-    // "list",
     "link",
     "unlink",
-    // "tabulation",
     "image",
     "hr",
     "eraser",
     "undo",
-    // "full-screen",
-    // "info",
   ],
   language: "zh-cn",
   image: {
@@ -77,22 +71,25 @@ Date.prototype.format = function () {
   return (s); // 返回日期。
 };
 
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth) {
-    if (!getCookie('token')) { // 没有登录则跳转/login页，进行登录
+router.beforeEach(async (to, from, next) => {
+  if(to.meta.requireAuth) {
+    if(!getCookie('token')) { // 没有登录则跳转/login页，进行登录
       next({
-        path: '/login',
+        name: 'Login',
         query: {
-          redirect: to.fullPath
+          redirect: to.name
         }
       })
     } else {
+      if(store.state.UserProfile.length === 0) {
+        await store.dispatch('getUserProfile')
+      }
       next()
     }
   } else {
     next()
   }
-});
+})
 
 /* eslint-disable no-new */
 new Vue({

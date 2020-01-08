@@ -2,8 +2,15 @@
   <div>
     <div class="head">
       <h1 class="head-title">{{$route.meta.title}}</h1>
-      <el-upload class="head-title" :headers="uploadHeaders" :action="Importurl">
-        <el-button size="small" type="primary">导入权限</el-button> <span slot="tip" class="el-upload__tip">只能的导入 xlsx,xls 文件，且不超过500kb</span>
+      <el-upload
+        class="head-title"
+        :on-success="handleImportSuccess"
+        :on-error="handleImportError"
+        :headers="uploadHeaders"
+        accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        :action="Importurl">
+        <el-button size="small" type="primary">导入权限</el-button>
+        <span slot="tip" class="el-upload__tip">  只能的导入 xlsx 文件，且大小不超过4M </span>
       </el-upload>
       <div class="head-action">
         <el-input
@@ -120,6 +127,7 @@
           Authorization: 'Bearer ' + getCookie('token')
         },
         Importurl: this.$Importurl + "permissions/import",
+
       }
     },
     computed: {
@@ -158,7 +166,7 @@
         this.previewcol = true;
       },
       async getData(queryInfo) {
-        if (queryInfo){
+        if (queryInfo) {
           if (this.PermissionsData.ListData.length === 0) {
             this.loading = true
           }
@@ -186,6 +194,28 @@
           }
         })
       },
+      handleImportSuccess(res,file) {
+        if (data.status) {
+          this.$message({
+            type: 'success',
+            message: data.msg
+          });
+          this.$router.push({
+            name: 'UsersMange'
+          })
+        } else {
+          this.$message({
+            type: 'info',
+            message: data.msg
+          })
+        }
+      }, handleImportError(res,file){
+          this.$message({
+            type: 'error',
+            message:"导入出错"
+          })
+      },
+
     },
     mounted() {
       this.getData()
