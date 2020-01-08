@@ -2,24 +2,18 @@
   <div>
     <div class="head">
       <h1 class="head-title">{{$route.meta.title}}</h1>
+      <el-upload class="head-title" :headers="uploadHeaders" :action="Importurl">
+        <el-button size="small" type="primary">导入权限</el-button> <span slot="tip" class="el-upload__tip">只能的导入 xlsx,xls 文件，且不超过500kb</span>
+      </el-upload>
       <div class="head-action">
-        <el-input v-model="customFilters[0].vals" prefix-icon="el-icon-search" placeholder="搜索权限路由"
-                  class="class_input_width">
+        <el-input
+          v-model="customFilters[0].vals"
+          prefix-icon="el-icon-search"
+          placeholder="搜索权限路由"
+          class="class_input_width">
         </el-input>
         <el-button type="primary" @click="goSeed">新建权限</el-button>
       </div>
-      <el-upload
-        action="http://localhost:8081/v1/admin/permissions/import"
-        :on-preview="handlePreview"
-        :on-remove="handleRemove"
-        :before-remove="beforeRemove"
-        multiple
-        :limit="1"
-        :on-exceed="handleExceed"
-        :file-list="fileList">
-        <el-button size="small" type="primary">点击上传</el-button>
-        <!--            <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>-->
-      </el-upload>
     </div>
 
     <div class="content">
@@ -90,127 +84,113 @@
 </template>
 
 <script>
-    import {mapActions, mapState} from 'vuex'
-    import api from '@/utils/api'
+  import {mapActions, mapState} from 'vuex'
+  import api from '@/utils/api'
+  import {getCookie} from "../../utils";
 
-    export default {
-        components: {},
-        data() {
-            return {
-                loading: false,
-                tableProps: {
-                    border: false, //去掉边框
-                    stripe: false //去掉斑马纹
-                },
-                customFilters: [{
-                    vals: '',
-                    props: ['DisplayName', 'Name'],
-                }, {
-                    vals: []
-                }, {
-                    vals: []
-                }, {
-                    vals: []
-                }, {
-                    vals: []
-                }],
-                dialogVisible: false,
-                save_id: null,
-                previewcol: false,
-                //存放弹出框的数据
-                colshowlog: {},
-                // fileList: [
-                //     {
-                //         name: 'food.jpeg',
-                //         url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                //     },
-                //     {
-                //         name: 'food2.jpeg',
-                //         url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'
-                //     }
-                // ],
-            }
+  export default {
+    components: {},
+    data() {
+      return {
+        loading: false,
+        tableProps: {
+          border: false, //去掉边框
+          stripe: false //去掉斑马纹
         },
-        computed: {
-            ...mapState([
-                'PermissionsData'
-            ])
+        customFilters: [{
+          vals: '',
+          props: ['DisplayName', 'Name'],
+        }, {
+          vals: []
+        }, {
+          vals: []
+        }, {
+          vals: []
+        }, {
+          vals: []
+        }],
+        dialogVisible: false,
+        save_id: null,
+        previewcol: false,
+        //存放弹出框的数据
+        colshowlog: {},
+        //上传头像请求地址的头部信息
+        uploadHeaders: {
+          Accept: 'application/json',
+          Authorization: 'Bearer ' + getCookie('token')
         },
-        methods: {
-            ...mapActions([
-                'getPermissions'
-            ]),
-            deletes(row) {
-                this.$confirm('真的要删除此权限吗？', '删除', {
-                    confirmButtonText: '确定',
-                    cancelButtonText: '取消',
-                    type: 'warning'
-                }).then(async () => {
-                    this.loading = true
-                    const data = await api.deletePermissions(row.ID)
-                    if (data.status) {
-                        this.$message({
-                            message: data.msg,
-                            type: 'success'
-                        })
-                    } else {
-                        this.$message.error(data.msg)
-                    }
-                    this.getData()
-                    this.loading = false
-                }).catch(() => {
+        Importurl: this.$Importurl + "permissions/import",
+      }
+    },
+    computed: {
+      ...mapState([
+        'PermissionsData'
+      ])
+    },
+    methods: {
+      ...mapActions([
+        'getPermissions'
+      ]),
+      deletes(row) {
+        this.$confirm('真的要删除此权限吗？', '删除', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          this.loading = true
+          const data = await api.deletePermissions(row.ID);
+          if (data.status) {
+            this.$message({
+              message: data.msg,
+              type: 'success'
+            })
+          } else {
+            this.$message.error(data.msg)
+          }
+          this.getData();
+          this.loading = false
+        }).catch(() => {
 
-                })
-            },
-            details(scope) {
-                this.colshowlog = scope.row;
-                this.previewcol = true;
-            },
-            async getData(queryInfo) {
+        })
+      },
+      details(scope) {
+        this.colshowlog = scope.row;
+        this.previewcol = true;
+      },
+      async getData(queryInfo) {
+        if (queryInfo){
+          if (this.PermissionsData.ListData.length === 0) {
+            this.loading = true
+          }
 
-                if (this.PermissionsData.ListData.length == 0) {
-                    this.loading = true
-                }
-
-                this.PermissionsData.queryData = {
-                    limit: queryInfo.pageSize,
-                    offset: queryInfo.page,
-                    name: this.customFilters[0].vals,
-                }
-                await this.getPermissions(this.PermissionsData.queryData);
-                // await this.getPermissions()
-                this.loading = false
-            },
-            goSeed() {
-                this.$router.push({
-                    name: 'AddPermissions'
-                })
-            },
-            edit(row) {
-                this.$router.push({
-                    name: 'EditPermissions',
-                    params: {
-                        id: row.ID
-                    }
-                })
-            },
-            // handleRemove(file, fileList) {
-            //     console.log(file, fileList);
-            // },
-            // handlePreview(file) {
-            //     console.log(file);
-            // },
-            // handleExceed(files, fileList) {
-            //     this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-            // },
-            // beforeRemove(file, fileList) {
-            //     return this.$confirm(`确定移除 ${file.name}？`);
-            // }
-        },
-        mounted() {
-            this.getData()
+          this.PermissionsData.queryData = {
+            limit: queryInfo.pageSize,
+            offset: queryInfo.page,
+            name: this.customFilters[0].vals,
+          };
+          await this.getPermissions(this.PermissionsData.queryData);
         }
+
+        this.loading = false
+      },
+      goSeed() {
+        this.$router.push({
+          name: 'AddPermissions'
+        })
+      },
+      edit(row) {
+        this.$router.push({
+          name: 'EditPermissions',
+          params: {
+            id: row.ID
+          }
+        })
+      },
+    },
+    mounted() {
+      this.getData()
     }
+  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -221,25 +201,22 @@
     margin-top: 10px;
     cursor: pointer;
 
-  &
-  -div {
-    margin-top: 10px;
+    &-div {
+      margin-top: 10px;
 
-  &
-  -input {
-    width: 40%;
-  }
+      &-input {
+        width: 40%;
+      }
 
-  &
-  -add {
-    color: rgb(60, 152, 255);
-    font-size: 14px;
-    margin-top: 10px;
-    cursor: pointer;
-    margin-left: 15px;
-  }
+      &-add {
+        color: rgb(60, 152, 255);
+        font-size: 14px;
+        margin-top: 10px;
+        cursor: pointer;
+        margin-left: 15px;
+      }
 
-  }
+    }
   }
 
   .class_input_width {
@@ -260,26 +237,24 @@
     margin-top: 10px;
     display: flex;
 
-  &
-  h1 {
-    font-size: 20px;
-    color: rgb(16, 16, 16);
-    font-weight: 400;
-    width: 180px;
-  }
+    &
+    h1 {
+      font-size: 20px;
+      color: rgb(16, 16, 16);
+      font-weight: 400;
+      width: 180px;
+    }
 
-  &
-  -action {
-    flex: 1;
-    text-align: right;
+    &-action {
+      flex: 1;
+      text-align: right;
 
-  &
-  -search {
-    width: 240px;
-    margin-right: 10px;
-  }
+      &-search {
+        width: 240px;
+        margin-right: 10px;
+      }
 
-  }
+    }
   }
 
   .content {
@@ -289,27 +264,25 @@
     padding: 15px;
     border-radius: 4px;
 
-  &
-  -select {
-    padding: 10px 15px;
-    background-color: rgb(246, 247, 248);
-    position: relative;
+    &-select {
+      padding: 10px 15px;
+      background-color: rgb(246, 247, 248);
+      position: relative;
 
-  .line {
-    position: absolute;
-    width: 1px;
-    height: 24px;
-    background: rgb(187, 187, 187);
-    left: 110px;
-    top: 18px;
-  }
+      .line {
+        position: absolute;
+        width: 1px;
+        height: 24px;
+        background: rgb(187, 187, 187);
+        left: 110px;
+        top: 18px;
+      }
 
-  &
-  -button {
-    display: inline-block;
-    margin-left: 60px;
-  }
+      &-button {
+        display: inline-block;
+        margin-left: 60px;
+      }
 
-  }
+    }
   }
 </style>

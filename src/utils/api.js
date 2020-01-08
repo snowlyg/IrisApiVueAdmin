@@ -1,7 +1,7 @@
 import request from './request'
 import apiUrl from './apiUrl'
 
-const api_url = apiUrl
+const api_url = apiUrl;
 const api = {
   //登陆
   getToken: (item) => request.post(`${api_url}/v1/admin/login`, {
@@ -10,8 +10,7 @@ const api = {
   }),
   //登陆用户信息
   getUserProfile: () => request.get(`${api_url}/v1/admin/users/profile`),
-  //首页
-  getIndex: () => request.get(`${api_url}/v1/`),
+
   /*---------------- 设置 -----------------*/
   //编辑用户
   putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.id}`, {
@@ -31,6 +30,12 @@ const api = {
   getPermissions: (datas) => request.get(`${api_url}/v1/admin/permissions`,datas),
   //新建权限
   postPermissions: (form) => request.post(`${api_url}/v1/admin/permissions`, {
+    name: form.Name,
+    description: form.Description,
+    display_name: form.DisplayName
+  }),
+  //导入权限
+  importPermissions: (form) => request.post(`${api_url}/v1/admin/permissions/import`, {
     name: form.Name,
     description: form.Description,
     display_name: form.DisplayName
@@ -74,13 +79,7 @@ const api = {
     username: form.Username,
     role_id: form.RoleID,
   }),
-  //编辑账号
-  // putAdmins: (form) => request.put(`${api_url}/v1/admin/users/${form.ID}`, {
-  //   password: form.Password,
-  //   name: form.Name,
-  //   username: form.Username,
-  //   role_id: form.RoleID,
-  // }),
+
   //删除账号
   deleteAdmins: (id) => request.delete(`${api_url}/v1/admin/users/${id}`),
 

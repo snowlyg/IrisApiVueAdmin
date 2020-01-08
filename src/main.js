@@ -18,7 +18,7 @@ Vue.config.productionTip = false;
 Vue.prototype.$valid = valid;
 // 设置全局的上传图片路径
 Vue.prototype.$weburl = apiUrl;
-Vue.prototype.$uploadimgurl = Vue.prototype.$weburl + '/v1/upload_image';
+Vue.prototype.$Importurl = Vue.prototype.$weburl + '/v1/admin/';
 
 const options = {
   // 是否显示模块名称，开启的话会在工具栏的图标后台直接显示名称
@@ -93,6 +93,7 @@ router.beforeEach((to, from, next) => {
     next()
   }
 });
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
@@ -102,4 +103,4 @@ new Vue({
     App
   },
   template: '<App/>'
-})
+});
