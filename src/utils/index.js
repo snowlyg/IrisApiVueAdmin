@@ -192,13 +192,13 @@ axios.interceptors.request.use(
     return config
   },
   error => {
-    // if (error) {
-    //   Vue.prototype.$message({
-    //     showClose: true,
-    //     message: error.Error,
-    //     type: 'warning'
-    //   });
-    // }
+    if (error) {
+      Vue.prototype.$message({
+        showClose: true,
+        message: error.Error,
+        type: 'warning'
+      });
+    }
 
     return Promise.reject(error)
   }
@@ -206,7 +206,7 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   response => {
-    console.log(response);
+
     // 定时刷新access-token
     // if (!response.data.value && response.data.data.message === 'token invalid') {
     //   // 刷新token
@@ -216,6 +216,27 @@ axios.interceptors.response.use(
     //     throw new Error('token刷新' + error)
     //   })
     // }
+
+    if (response.status === 401) {
+      router.replace({
+      name: 'Login'
+    })
+  }
+if (response.status === 403) {
+  Vue.prototype.$message({
+    showClose: true,
+    message: '你没有操作权限',
+    type: 'warning'
+  })
+}
+
+if (response.status === 419) {
+  Vue.prototype.$message({
+    showClose: true,
+    message: '你的操作太频繁，请稍后再试',
+    type: 'warning'
+  })
+}
     return response
   },
   error => {

@@ -99,9 +99,9 @@
           this.loading = true
           const data = await utils.getRolesDetail(this.$route.params.id);
           const permissions = await utils.getPermissions();
-          this.data = permissions.data.data
+          this.data = permissions.data.data;
             let ruleForm = data.data.data;
-            this.ruleForm = ruleForm
+            this.ruleForm = ruleForm;
 
           if (ruleForm.Perms) {
               ruleForm.Perms.forEach(e => {

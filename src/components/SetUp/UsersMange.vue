@@ -143,13 +143,13 @@
         }).then(async () => {
           this.loading = true
           const data = await utils.deleteAdmins(row.Id);
-          if (data.status) {
+          if (data.data.status) {
             this.$message({
-              message: data.msg,
+              message: data.data.msg,
               type: 'success'
             })
           } else {
-            this.$message.error(data.msg)
+            this.$message.error(data.data.msg)
           }
           this.getData();
           this.loading = false
