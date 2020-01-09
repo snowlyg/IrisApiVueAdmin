@@ -142,7 +142,7 @@
           type: 'warning'
         }).then(async () => {
           this.loading = true
-          const data = await api.deleteAdmins(row.ID);
+          const data = await api.deleteAdmins(row.Id);
           if (data.status) {
             this.$message({
               message: data.msg,
@@ -184,7 +184,7 @@
         this.$router.push({
           name: 'EditUsers',
           params: {
-            id: row.ID
+            id: row.Id
           }
         })
       }

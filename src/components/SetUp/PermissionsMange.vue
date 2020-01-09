@@ -91,139 +91,138 @@
 </template>
 
 <script>
-  import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
-  import {getCookie} from "../../utils";
+    import {mapActions, mapState} from 'vuex'
+    import api from '@/utils/api'
+    import {getCookie} from "../../utils";
 
-  export default {
-    components: {},
-    data() {
-      return {
-        loading: false,
-        tableProps: {
-          border: false, //去掉边框
-          stripe: false //去掉斑马纹
+    export default {
+        components: {},
+        data() {
+            return {
+                loading: false,
+                tableProps: {
+                    border: false, //去掉边框
+                    stripe: false //去掉斑马纹
+                },
+                customFilters: [{
+                    vals: '',
+                    props: ['DisplayName', 'Name'],
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }],
+                dialogVisible: false,
+                save_id: null,
+                previewcol: false,
+                //存放弹出框的数据
+                colshowlog: {},
+                //上传头像请求地址的头部信息
+                uploadHeaders: {
+                    Accept: 'application/json',
+                    Authorization: 'Bearer ' + getCookie('token')
+                },
+                Importurl: this.$Importurl + "permissions/import",
+
+            }
         },
-        customFilters: [{
-          vals: '',
-          props: ['DisplayName', 'Name'],
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }],
-        dialogVisible: false,
-        save_id: null,
-        previewcol: false,
-        //存放弹出框的数据
-        colshowlog: {},
-        //上传头像请求地址的头部信息
-        uploadHeaders: {
-          Accept: 'application/json',
-          Authorization: 'Bearer ' + getCookie('token')
+        computed: {
+            ...mapState([
+                'PermissionsData'
+            ])
         },
-        Importurl: this.$Importurl + "permissions/import",
+        methods: {
+            ...mapActions([
+                'getPermissions'
+            ]),
+            deletes(row) {
+                this.$confirm('真的要删除此权限吗？', '删除', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(async () => {
+                    this.loading = true;
+                    const data = await api.deletePermissions(row.Id);
+                    if (data.status) {
+                        this.$message({
+                            message: data.msg,
+                            type: 'success'
+                        })
+                    } else {
+                        this.$message.error(data.msg)
+                    }
+                    this.getData();
+                    this.loading = false
+                }).catch(() => {
 
-      }
-    },
-    computed: {
-      ...mapState([
-        'PermissionsData'
-      ])
-    },
-    methods: {
-      ...mapActions([
-        'getPermissions'
-      ]),
-      deletes(row) {
-        this.$confirm('真的要删除此权限吗？', '删除', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async () => {
-          this.loading = true
-          const data = await api.deletePermissions(row.ID);
-          if (data.status) {
-            this.$message({
-              message: data.msg,
-              type: 'success'
-            })
-          } else {
-            this.$message.error(data.msg)
-          }
-          this.getData();
-          this.loading = false
-        }).catch(() => {
+                })
+            },
+            details(scope) {
+                this.colshowlog = scope.row;
+                this.previewcol = true;
+            },
+            async getData(queryInfo) {
+                if (queryInfo) {
+                    if (this.PermissionsData.ListData.length === 0) {
+                        this.loading = true
+                    }
 
-        })
-      },
-      details(scope) {
-        this.colshowlog = scope.row;
-        this.previewcol = true;
-      },
-      async getData(queryInfo) {
-        if (queryInfo) {
-          if (this.PermissionsData.ListData.length === 0) {
-            this.loading = true
-          }
+                    this.PermissionsData.queryData = {
+                        limit: queryInfo.pageSize,
+                        offset: queryInfo.page,
+                        name: this.customFilters[0].vals,
+                    };
+                    await this.getPermissions(this.PermissionsData.queryData);
+                }
 
-          this.PermissionsData.queryData = {
-            limit: queryInfo.pageSize,
-            offset: queryInfo.page,
-            name: this.customFilters[0].vals,
-          };
-          await this.getPermissions(this.PermissionsData.queryData);
+                this.loading = false
+            },
+            goSeed() {
+                this.$router.push({
+                    name: 'AddPermissions'
+                })
+            },
+            edit(row) {
+                this.$router.push({
+                    name: 'EditPermissions',
+                    params: {
+                        id: row.Id
+                    }
+                })
+            },
+            handleImportSuccess(res, file) {
+                if (res.status) {
+                    this.$message({
+                        type: 'success',
+                        message: res.msg
+                    });
+                    this.$router.push({
+                        name: 'UsersMange'
+                    })
+                } else {
+                    this.$message({
+                        type: 'info',
+                        message: res.msg
+                    })
+                }
+            }, handleImportError(res, file) {
+                this.$message({
+                    type: 'error',
+                    message: "导入出错"
+                })
+            },
+
+        },
+        mounted() {
+            this.getData()
         }
-
-        this.loading = false
-      },
-      goSeed() {
-        this.$router.push({
-          name: 'AddPermissions'
-        })
-      },
-      edit(row) {
-        this.$router.push({
-          name: 'EditPermissions',
-          params: {
-            id: row.ID
-          }
-        })
-      },
-      handleImportSuccess(res,file) {
-        if (data.status) {
-          this.$message({
-            type: 'success',
-            message: data.msg
-          });
-          this.$router.push({
-            name: 'UsersMange'
-          })
-        } else {
-          this.$message({
-            type: 'info',
-            message: data.msg
-          })
-        }
-      }, handleImportError(res,file){
-          this.$message({
-            type: 'error',
-            message:"导入出错"
-          })
-      },
-
-    },
-    mounted() {
-      this.getData()
     }
-  }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
   .AddGroup {
     color: rgb(60, 152, 255);
@@ -267,8 +266,7 @@
     margin-top: 10px;
     display: flex;
 
-    &
-    h1 {
+    &h1 {
       font-size: 20px;
       color: rgb(16, 16, 16);
       font-weight: 400;

@@ -126,7 +126,7 @@
           type: 'warning'
         }).then(async () => {
           this.loading = true;
-          const data = await api.deleteRoles(row.ID);
+          const data = await api.deleteRoles(row.Id);
           if (data.status) {
             this.$message({
               message: data.msg,
@@ -168,7 +168,7 @@
         this.$router.push({
           name: 'EditRole',
           params: {
-            id: row.ID
+            id: row.Id
           }
         })
       }
