@@ -44,7 +44,7 @@ const utils = {
   delCookie: (name) => {
     var exp = new Date();
     exp.setTime(exp.getTime() - 1);
-    var cval = this.getCookie(name);
+    var cval = utils.getCookie(name);
     if (cval != null)
       document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
   },

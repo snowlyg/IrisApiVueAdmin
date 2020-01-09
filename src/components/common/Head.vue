@@ -114,7 +114,7 @@
 			},
 			handleCommand(command) {
 				if(command == 'logout') {
-					delCookie('token')
+					utils.delCookie('token');
 					this.$message({
 						message: '成功退出',
 						type: 'success'
