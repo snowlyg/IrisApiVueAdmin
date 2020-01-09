@@ -75,7 +75,7 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
+  import utils from '@/utils'
 
   export default {
     components: {},
@@ -126,7 +126,7 @@
           type: 'warning'
         }).then(async () => {
           this.loading = true;
-          const data = await api.deleteRoles(row.Id);
+          const data = await utils.deleteRoles(row.Id);
           if (data.status) {
             this.$message({
               message: data.msg,
@@ -154,7 +154,7 @@
             limit: queryInfo.pageSize,
             offset: queryInfo.page,
             name: this.customFilters[0].vals,
-          }
+          };
           await this.getRoles(this.RolesData.queryData);
         }
         this.loading = false

@@ -34,7 +34,7 @@
 </template>
 
 <script>
-  import api from '@/utils/api'
+  import utils from '@/utils'
 
   export default {
     data() {
@@ -73,9 +73,9 @@
     methods: {
 
       async getData() {
-        this.loading = true
-        const data = await api.getPermissionsDetail(this.$route.params.id)
-        this.ruleForm = data.data
+        this.loading = true;
+        const data = await utils.getPermissionsDetail(this.$route.params.id);
+        this.ruleForm = data.data;
         this.loading = false
       },
       //提交表单
@@ -96,7 +96,7 @@
       },
       async postPermissions() {
         this.loading = true
-        const data = await api.postPermissions(this.ruleForm)
+        const data = await utils.postPermissions(this.ruleForm);
         if (data.status) {
           this.$message({
             type: 'success',
@@ -115,7 +115,7 @@
       },
       async putPermissions() {
         this.loading = true
-        const data = await api.putPermissions(this.ruleForm)
+        const data = await utils.putPermissions(this.ruleForm);
         if (data.status) {
           this.$message({
             type: 'success',

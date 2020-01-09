@@ -92,8 +92,7 @@
 
 <script>
     import {mapActions, mapState} from 'vuex'
-    import api from '@/utils/api'
-    import {getCookie} from "../../utils";
+    import utils from '@/utils'
 
     export default {
         components: {},
@@ -124,7 +123,7 @@
                 //上传头像请求地址的头部信息
                 uploadHeaders: {
                     Accept: 'application/json',
-                    Authorization: 'Bearer ' + getCookie('token')
+                    Authorization: 'Bearer ' + utils.getCookie('token')
                 },
                 Importurl: this.$Importurl + "permissions/import",
 
@@ -146,7 +145,7 @@
                     type: 'warning'
                 }).then(async () => {
                     this.loading = true;
-                    const data = await api.deletePermissions(row.Id);
+                    const data = await this.api.deletePermissions(row.Id);
                     if (data.status) {
                         this.$message({
                             message: data.msg,

@@ -40,7 +40,7 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
+  import utils from '@/utils'
 
   export default {
     data() {
@@ -97,8 +97,8 @@
       async getData() {
         if (this.$route.params.id) {
           this.loading = true
-          const data = await api.getRolesDetail(this.$route.params.id)
-          const data2 = await api.getPermissions()
+          const data = await utils.getRolesDetail(this.$route.params.id);
+          const data2 = await utils.getPermissions();
           this.data = data2.data
           this.ruleForm = data.data
 
@@ -108,8 +108,8 @@
             })
           }
         } else {
-          const data2 = await api.getPermissions()
-          this.data = data2.data
+          const data2 = await utils.getPermissions();
+          this.data = data2.data;
           this.data.forEach(e => {
             this.per_ids.push(e.ID)
           })
@@ -136,7 +136,7 @@
       async postRoles() {
         this.loading = true
         this.ruleForm.permissions_ids = this.$refs.tree.getCheckedKeys()
-        const data = await api.postRoles(this.ruleForm)
+        const data = await utils.postRoles(this.ruleForm)
         if (data.status) {
           this.$message({
             type: 'success',
@@ -156,7 +156,7 @@
       async putRoles() {
         this.loading = true
         this.ruleForm.permissions_ids = this.$refs.tree.getCheckedKeys()
-        const data = await api.putRoles(this.ruleForm)
+        const data = await utils.putRoles(this.ruleForm)
         if (data.status) {
           this.$message({
             type: 'success',

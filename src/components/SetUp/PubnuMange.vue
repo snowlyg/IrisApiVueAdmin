@@ -23,7 +23,7 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
+  import utils from '@/utils'
 
   export default {
     data() {
@@ -63,7 +63,7 @@
       },
       async patchFindWechatSettings() {
         this.loading = true
-        const data = await api.patchFindWechatSettings(this.ruleForm)
+        const data = await utils.patchFindWechatSettings(this.ruleForm)
         if (data.status == 'error') {
           this.$message.error(data.msg)
         } else {

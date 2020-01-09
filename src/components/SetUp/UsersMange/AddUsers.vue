@@ -28,7 +28,7 @@
           <el-form-item label="选择角色" prop="RoleID" class="margin-left-lg margin-top must">
             <el-select v-model="ruleForm.RoleID" placeholder="请选择角色">
               <el-option v-for="item,index in RolesData.ListData" :key="index" :label="item.DisplayName"
-                         :value="item.ID"/>
+                         :value="item.Id"/>
             </el-select>
           </el-form-item>
 
@@ -43,76 +43,76 @@
 </template>
 
 <script>
-  import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
+    import {mapActions, mapState} from 'vuex'
+    import utils from '@/utils'
 
-  export default {
-    data() {
-      var validatePass3 = (rule, value, callback) => {
-        if (value.length < 6) {
-          callback(new Error('请正确输入密码'))
-        } else {
-          callback()
-        }
-      }
-      return {
-        data: [],
-        labelPosition: 'right',
-        ruleForm: {
-          Username: '',
-          Name: '',
-          Password: '',
-          RoleID: '',
-          ID: this.$route.params.id
+    export default {
+        data() {
+            var validatePass3 = (rule, value, callback) => {
+                if (value.length < 6) {
+                    callback(new Error('请正确输入密码'))
+                } else {
+                    callback()
+                }
+            }
+            return {
+                data: [],
+                labelPosition: 'right',
+                ruleForm: {
+                    Username: '',
+                    Name: '',
+                    Password: '',
+                    RoleID: '',
+                    ID: this.$route.params.id
+                },
+                rules: {
+                    Username: [{
+                        required: true,
+                        message: '请输入姓名',
+                        trigger: 'blur'
+                    }],
+                    Name: [{
+                        required: true,
+                        message: '请输入账号名',
+                        trigger: 'blur'
+                    }],
+                    Password: [{
+                        required: true,
+                        validator: validatePass3,
+                        trigger: 'blur'
+                    }],
+                    RoleID: [{
+                        required: true,
+                        message: '请选择角色',
+                        trigger: 'change'
+                    }],
+                },
+                loading: false,
+                resetdata: false,
+            }
         },
-        rules: {
-          Username: [{
-            required: true,
-            message: '请输入姓名',
-            trigger: 'blur'
-          }],
-          Name: [{
-            required: true,
-            message: '请输入账号名',
-            trigger: 'blur'
-          }],
-          Password: [{
-            required: true,
-            validator: validatePass3,
-            trigger: 'blur'
-          }],
-          RoleID: [{
-            required: true,
-            message: '请选择角色',
-            trigger: 'change'
-          }],
+        computed: {
+            ...mapState([
+                'RolesData'
+            ])
         },
-        loading: false,
-        resetdata: false,
-      }
-    },
-    computed: {
-      ...mapState([
-        'RolesData'
-      ])
-    },
-    methods: {
-      ...mapActions([
-        'getRoles'
-      ]),
-      async getData() {
+        methods: {
+            ...mapActions([
+                'getRoles'
+            ]),
+            async getData() {
 
-        if (this.$route.params.id) {
-          this.loading = true
-          const data = await api.getAdminsDetail(this.$route.params.id)
-          await this.getRoles()
-          this.ruleForm.Username = data.data.Username
-          this.ruleForm.Name = data.data.Name
-          this.ruleForm.RoleID = data.data.RoleID
+                if (this.$route.params.id) {
+                    this.loading = true
+                    const data = await utils.getAdminsDetail(this.$route.params.id);
+                    await this.getRoles()
+                    this.ruleForm.Username = data.data.Username
+                    this.ruleForm.Name = data.data.Name
+                    this.ruleForm.RoleID = data.data.RoleID
 
-        } else {
-          await this.getRoles()
-        }
+                } else {
+                    await this.getRoles()
+                }
 
         this.loading = false
       },
@@ -134,7 +134,7 @@
       },
       async postAdmins() {
         this.loading = true
-        const data = await api.postAdmins(this.ruleForm);
+        const data = await utils.postAdmins(this.ruleForm);
         if (data.status) {
           this.$message({
             type: 'success',
@@ -153,7 +153,7 @@
       },
       async putAdmins() {
         this.loading = true
-        const data = await api.putAdmins(this.ruleForm)
+        const data = await utils.putAdmins(this.ruleForm)
         if (data.status) {
           this.$message({
             type: 'success',

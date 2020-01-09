@@ -1,91 +1,237 @@
-export function hasClass(el, className) {
-	let reg = new RegExp('(^|\\s)' + className + '(\\s|$)')
-	return reg.test(el.className)
-}
+import axios from 'axios'
+import apiUrl from '@/utils/apiUrl'
+import Vue from 'vue'
 
-export function addClass(el, className) {
-	if(hasClass(el, className)) {
-		return
-	}
+const api_url = apiUrl;
 
-	let newClass = el.className.split(' ')
-	newClass.push(className)
-	el.className = newClass.join(' ')
-}
+const utils = {
+  api_url: api_url,
+  getCookie: (name) => {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+    arr = document.cookie.match(reg);
+    if (arr)
+      return unescape(arr[2]);
+    else
+      return false;
+  },
+  setCookie: (c_name, value, expiredays) => {
+    var exdate = new Date();
+    exdate.setDate(exdate.getDate() + expiredays);
+    document.cookie = c_name + "=" + escape(value) +
+      ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
+  },
+  hasClass: (el, className) => {
+    let reg = new RegExp('(^|\\s)' + className + '(\\s|$)');
+    return reg.test(el.className)
+  },
+  addClass: (el, className) => {
+    if (hasClass(el, className)) {
+      return
+    }
 
-export function removeClass(el, className) {
-	if(!hasClass(el, className)) {
-		return
-	}
+    let newClass = el.className.split(' ');
+    newClass.push(className);
+    el.className = newClass.join(' ')
+  },
+  removeClass: (el, className) => {
+    if (!hasClass(el, className)) {
+      return
+    }
 
-	let reg = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g')
-	el.className = el.className.replace(reg, ' ')
-}
+    let reg = new RegExp('(^|\\s)' + className + '(\\s|$)', 'g');
+    el.className = el.className.replace(reg, ' ')
+  },
+  delCookie: (name) => {
+    var exp = new Date();
+    exp.setTime(exp.getTime() - 1);
+    var cval = this.getCookie(name);
+    if (cval != null)
+      document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
+  },
+  scrollLeft: (element, endOffset) => {
+    var raf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function (fun) {
+      setTimeout(fun, 1000 / 60);
+    };
+
+    function scrollTo(element, endOffset, params) {
+      var startOffset;
+      var scrollProp;
+      if (params.horizontal) {
+        startOffset = element.scrollLeft;
+        scrollProp = 'scrollLeft';
+      } else if (params.vertical) {
+        startOffset = element.scrollTop;
+        scrollProp = 'scrollTop';
+      }
+
+      var distance = endOffset - startOffset;
+      var forward = true;
+      if (distance == 0) {
+        return;
+      }
+
+      forward = (distance > 0);
+
+      function scroll() {
+        var speed = 2 + Math.abs(endOffset - startOffset) / 5;
+        if (!forward) {
+          speed = -speed;
+        }
+        startOffset += speed;
+        element[scrollProp] = startOffset;
+        if (startOffset < endOffset && speed > 0 || startOffset > endOffset && speed < 0) {
+          raf(scroll);
+        }
+      }
+
+      scroll();
+    }
+
+    scrollTo(element, endOffset, {
+      horizontal: true
+    });
+
+  },
+  //登陆
+  getToken: (item) => axios.post(`v1/admin/login`, {
+    Username: item.name,
+    Password: item.password
+  }),
+  //登陆用户信息
+  getUserProfile: () => axios.get(`v1/admin/users/profile`),
+
+  /*---------------- 设置 -----------------*/
+  //编辑用户
+  putAdmins: (form) => axios.put(`v1/admin/users/${form.id}`, {
+    name: form.name,
+    email: form.email,
+    password: form.password,
+    username: form.username,
+    phone: form.phone,
+    role_id: form.role_id
+  }),
+  //修改密码
+  putUsersPassword: (form) => axios.put(`v1/admin/users/${form.id}/password`, {
+    password: form.password
+  }),
+  /*----------------权限管理-------------------*/
+  //权限列表
+  getPermissions: (datas) => axios.get(`v1/admin/permissions`, datas),
+  //新建权限
+  postPermissions: (form) => axios.post(`v1/admin/permissions`, {
+    name: form.Name,
+    description: form.Description,
+    display_name: form.DisplayName
+  }),
+  //编辑权限
+  putPermissions: (form) => axios.put(`v1/admin/permissions/${form.ID}`, {
+    name: form.Name,
+    description: form.Description,
+    display_name: form.DisplayName
+  }),
+  //删除权限
+  deletePermissions: (id) => axios.delete(`v1/admin/permissions/${id}`),
+  //权限详情
+  getPermissionsDetail: (id) => axios.get(`v1/admin/permissions/${id}`),
+  /*----------------角色管理-------------------*/
+  //角色列表
+  getRoles: (datas) => axios.get(`v1/admin/roles`, datas),
+  //新建角色
+  postRoles: (form) => axios.post(`v1/admin/roles`, {
+    name: form.Name,
+    display_name: form.DisplayName,
+    permissions_ids: form.permissions_ids
+  }),
+  //编辑角色
+  putRoles: (form) => axios.put(`v1/admin/roles/${form.ID}`, {
+    name: form.Name,
+    display_name: form.DisplayName,
+    permissions_ids: form.permissions_ids
+  }),
+  //删除角色
+  deleteRoles: (id) => axios.delete(`v1/admin/roles/${id}`),
+  //角色详情
+  getRolesDetail: (id) => axios.get(`v1/admin/roles/${id}`),
+  /*----------------账号管理-------------------*/
+  //账号列表
+  getAdmins: (datas) => axios.get(`v1/admin/users`, datas),
+  //新建账号
+  postAdmins: (form) => axios.post(`v1/admin/users`, {
+    password: form.Password,
+    name: form.Name,
+    username: form.Username,
+    role_id: form.RoleID,
+  }),
+
+  //删除账号
+  deleteAdmins: (id) => axios.delete(`v1/admin/users/${id}`),
+
+  //账号详情
+  getAdminsDetail: (id) => axios.get(`v1/admin/users/${id}`),
+
+};
 
 
+axios.interceptors.request.use(
+  config => {
+    config.timeout = 6000;
+    let token = 'Bearer ' + utils.getCookie('token');
+    if (token) {
+      config.headers = {
+        'Authorization': token,
+        'Accept': "application/json",
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+    if (config.url === 'refresh') {
+      config.headers = {
+        'refresh-token': sessionStorage.getItem('refresh_token'),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    }
+    return config
+  },
+  error => {
+    // if (error) {
+    //   Vue.prototype.$message({
+    //     showClose: true,
+    //     message: error.Error,
+    //     type: 'warning'
+    //   });
+    // }
 
-export function getCookie(name) {
-	var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
-	if(arr = document.cookie.match(reg))
-		return unescape(arr[2]);
-	else
-		return false;
-}
+    return Promise.reject(error)
+  }
+)
 
-export function setCookie(c_name, value, expiredays) {
-	var exdate = new Date()
-	exdate.setDate(exdate.getDate() + expiredays)
-	document.cookie = c_name + "=" + escape(value) +
-		((expiredays == null) ? "" : ";expires=" + exdate.toGMTString())
-}
+axios.interceptors.response.use(
+  response => {
+    console.log(response);
+    // 定时刷新access-token
+    // if (!response.data.value && response.data.data.message === 'token invalid') {
+    //   // 刷新token
+    //   store.dispatch('refresh').then(response => {
+    //     sessionStorage.setItem('access_token', response.data)
+    //   }).catch(error => {
+    //     throw new Error('token刷新' + error)
+    //   })
+    // }
+    return response
+  },
+  error => {
+    if (error) {
+      Vue.prototype.$message({
+        showClose: true,
+        message: error,
+        type: 'warning'
+      });
+    }
+    return Promise.reject(error)
+  }
+);
 
-export function delCookie(name) {
-	var exp = new Date();
-	exp.setTime(exp.getTime() - 1);
-	var cval = getCookie(name);
-	if(cval != null)
-		document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
-}
 
-export function scrollLeft(element, endOffset) {
-	var raf = window.requestAnimationFrame || window.webkitRequestAnimationFrame || function(fun) {
-		setTimeout(fun, 1000 / 60);
-	};
+axios.defaults.baseURL = `${api_url}/`;
 
-	function scrollTo(element, endOffset, params) {
-		var startOffset;
-		var scrollProp;
-		if(params.horizontal) {
-			startOffset = element.scrollLeft;
-			scrollProp = 'scrollLeft';
-		} else if(params.vertical) {
-			startOffset = element.scrollTop;
-			scrollProp = 'scrollTop';
-		}
 
-		var distance = endOffset - startOffset;
-		var forward = true;
-		if(distance == 0) {
-			return;
-		}
-
-		forward = (distance > 0);
-
-		function scroll() {
-			var speed = 2 + Math.abs(endOffset - startOffset) / 5;
-			if(!forward) {
-				speed = -speed;
-			}
-			startOffset += speed;
-			element[scrollProp] = startOffset;
-			if(startOffset < endOffset && speed > 0 || startOffset > endOffset && speed < 0) {
-				raf(scroll);
-			}
-		}
-
-		scroll();
-	}
-	scrollTo(element, endOffset, {
-		horizontal: true
-	});
-}
+export default utils

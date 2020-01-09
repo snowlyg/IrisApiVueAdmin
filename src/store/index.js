@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import api from '@/utils/api'
+import utils from '@/utils'
 
 Vue.use(Vuex);
 
@@ -43,31 +43,31 @@ const store = new Vuex.Store({
 			state,
 			commit
 		}) {
-			const data = await api.getUserProfile();
-			commit('UserProfile', data.data)
+			const data = await utils.getUserProfile();
+			commit('UserProfile', data.data.data)
 		},
 		async getPermissions({
 			state,
 			commit
 		},datas) {
-			const data = await api.getPermissions(datas);
-			commit('PermissionsData', data.data)
+			const data = await utils.getPermissions(datas);
+			commit('PermissionsData', data.data.data)
 		},
 		async getRoles({
 			state,
 			commit
 		},datas) {
-			const data = await api.getRoles(datas);
-			commit('RolesData', data.data)
+			const data = await utils.getRoles(datas);
+			commit('RolesData', data.data.data)
 		},
 		async getAdmins({
 			state,
 			commit
 		},datas) {
-			const data = await api.getAdmins(datas);
-			commit('AdminsData', data.data)
+			const data = await utils.getAdmins(datas);
+			commit('AdminsData', data.data.data)
 		}
 	}
-})
+});
 
 export default store

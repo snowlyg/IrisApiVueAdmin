@@ -93,7 +93,7 @@
 
 <script>
   import {mapActions, mapState} from 'vuex'
-  import api from '@/utils/api'
+  import utils from '@/utils'
 
   export default {
     components: {},
@@ -142,7 +142,7 @@
           type: 'warning'
         }).then(async () => {
           this.loading = true
-          const data = await api.deleteAdmins(row.Id);
+          const data = await utils.deleteAdmins(row.Id);
           if (data.status) {
             this.$message({
               message: data.msg,

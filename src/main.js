@@ -8,14 +8,16 @@ import './styles/index.css'
 import './styles/font.css'
 import DataTables from 'vue-data-tables'
 import VueHtml5Editor from 'vue-html5-editor' //富文本编辑器
-import {getCookie} from '@/utils'
-import apiUrl from '@/utils/apiUrl'
+import utils from '@/utils'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 Vue.use(ElementUI);
 Vue.use(DataTables);
+Vue.use(axios,VueAxios);
 Vue.config.productionTip = false;
 // 设置全局的上传图片路径
-Vue.prototype.$weburl = apiUrl;
+Vue.prototype.$weburl = utils.api_url;
 Vue.prototype.$Importurl = Vue.prototype.$weburl + '/v1/admin/';
 
 const options = {
@@ -73,7 +75,7 @@ Date.prototype.format = function () {
 
 router.beforeEach(async (to, from, next) => {
   if(to.meta.requireAuth) {
-    if(!getCookie('token')) { // 没有登录则跳转/login页，进行登录
+    if(!utils.getCookie('token')) { // 没有登录则跳转/login页，进行登录
       next({
         name: 'Login',
         query: {

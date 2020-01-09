@@ -35,9 +35,9 @@
 </template>
 
 <script>
-	import { getCookie, delCookie } from '@/utils'
+	// import { getCookie, delCookie } from '@/utils'
 	import { mapState, mapActions } from 'vuex'
-	import api from '@/utils/api'
+	import utils from '@/utils'
 	export default {
 		name: 'Head',
 		data() {
@@ -97,11 +97,11 @@
 						let form = {}
 						form.id = this.UserProfile.id
 						form.password = this.ruleForm2.pass
-						const data = await api.putUsersPassword(form)
+						const data = await utils.putUsersPassword(form);
 						this.$message({
 							message: data.msg,
 							type: 'success'
-						})
+						});
 						this.dialogTableVisible = false
 					} else {
 						console.log('error submit!!');
@@ -133,7 +133,7 @@
 				}
 			},
 			async putPassword(form) {
-				await api.putUsersPassword(form)
+				await utils.putUsersPassword(form);
 				this.$message({
 					type: 'success',
 					message: '修改成功'
