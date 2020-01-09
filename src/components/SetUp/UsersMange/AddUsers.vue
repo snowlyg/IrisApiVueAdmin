@@ -140,7 +140,7 @@
             type: 'success',
             message: data.data.msg
           })
-          await this.$router.push({
+           this.$router.push({
               name: 'UsersMange'
           })
         } else {

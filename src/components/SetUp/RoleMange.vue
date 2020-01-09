@@ -132,9 +132,6 @@
                             message: data.data.msg,
                             type: 'success'
                         });
-                        await this.$router.push({
-                            name: 'RoleMange'
-                        })
                     } else {
                         this.$message.error(data.data.msg)
                     }

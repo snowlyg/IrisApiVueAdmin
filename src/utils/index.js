@@ -102,7 +102,7 @@ const utils = {
 
   /*---------------- 设置 -----------------*/
   //编辑用户
-  putAdmins: (form) => axios.put(`v1/admin/users/${form.id}`, {
+  putAdmins: (form) => axios.put(`v1/admin/users/${form.Id}`, {
     name: form.name,
     email: form.email,
     password: form.password,
@@ -111,7 +111,7 @@ const utils = {
     role_id: form.role_id
   }),
   //修改密码
-  putUsersPassword: (form) => axios.put(`v1/admin/users/${form.id}/password`, {
+  putUsersPassword: (form) => axios.put(`v1/admin/users/${form.Id}/password`, {
     password: form.password
   }),
   /*----------------权限管理-------------------*/
@@ -124,7 +124,7 @@ const utils = {
     display_name: form.DisplayName
   }),
   //编辑权限
-  putPermissions: (form) => axios.put(`v1/admin/permissions/${form.ID}`, {
+  putPermissions: (form) => axios.put(`v1/admin/permissions/${form.Id}`, {
     name: form.Name,
     description: form.Description,
     display_name: form.DisplayName
@@ -143,7 +143,7 @@ const utils = {
     permissions_ids: form.permissions_ids
   }),
   //编辑角色
-  putRoles: (form) => axios.put(`v1/admin/roles/${form.ID}`, {
+  putRoles: (form) => axios.put(`v1/admin/roles/${form.Id}`, {
     name: form.Name,
     display_name: form.DisplayName,
     permissions_ids: form.permissions_ids

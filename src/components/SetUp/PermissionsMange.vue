@@ -154,9 +154,7 @@
                     } else {
                         this.$message.error(data.data.msg)
                     }
-                    await this.$router.push({
-                        name: 'PermissionsMange'
-                    })
+
                     this.getData();
                     this.loading = false
                 }).catch(() => {
@@ -172,7 +170,6 @@
                     if (this.PermissionsData.ListData.length === 0) {
                         this.loading = true
                     }
-
                     this.PermissionsData.queryData = {
                         limit: queryInfo.pageSize,
                         offset: queryInfo.page,

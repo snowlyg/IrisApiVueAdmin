@@ -4,9 +4,9 @@
 
 			<li class="navPrimary" v-for="menu,index in menus">
 				<span class="linka da_bg" :class="{active:menu.id == $route.meta.cid}" @click="MenuParent(index, menu.url)">
-					<i :class="menu.icon"></i>
+					<i :class="menu.icon"/>
 					{{ menu.description }}
-					<i v-if="menu.children" :class="menu.is_show ? 'el-icon-arrow-down linka-icon-dow' : 'el-icon-arrow-down linka-icon-dow transformRight'"></i>
+					<i v-if="menu.children" :class="menu.is_show ? 'el-icon-arrow-down linka-icon-dow' : 'el-icon-arrow-down linka-icon-dow transformRight'"/>
 				</span>
 				<ul class="navSecond" v-show="menu.is_show">
 					<li v-for="child in menu.children" @click="$router.push({name: child.url})">

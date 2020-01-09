@@ -148,9 +148,6 @@
                             message: data.data.msg,
                             type: 'success'
                         });
-                        await this.$router.push({
-                            name: 'UsersMange'
-                        })
                     } else {
                         this.$message.error(data.data.msg)
                     }
