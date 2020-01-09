@@ -105,14 +105,14 @@
 
           if (ruleForm.Perms) {
               ruleForm.Perms.forEach(e => {
-              this.per_ids.push(e.ID)
+              this.per_ids.push(e.Id)
             })
           }
         } else {
           const permissions = await utils.getPermissions();
           this.data = permissions.data.data;
           this.data.forEach(e => {
-            this.per_ids.push(e.ID)
+            this.per_ids.push(e.Id)
           })
         }
 

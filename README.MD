@@ -24,7 +24,7 @@ export default api_url;
 ```
 
 
-####3 serve with hot reload at localhost:8080
+#### serve with hot reload at localhost:8080
 
 ```
 npm run dev
@@ -38,3 +38,15 @@ npm run dev
 管理员密码：password
 ```
 
+
+// config/index.js 文件修改打包文件生成位置
+
+```
+build: {
+    // Template for index.html
+    index: path.resolve(__dirname, '../../IrisAdminApi/resources/index.html'),
+
+    // Paths
+    assetsRoot: path.resolve(__dirname, '../../IrisAdminApi/resources'),
+
+```
