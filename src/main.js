@@ -14,7 +14,7 @@ import VueAxios from 'vue-axios'
 
 Vue.use(ElementUI);
 Vue.use(DataTables);
-Vue.use(axios,VueAxios);
+Vue.use(VueAxios,axios);
 Vue.config.productionTip = false;
 // 设置全局的上传图片路径
 Vue.prototype.$weburl = utils.api_url;

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import apiUrl from '@/utils/apiUrl'
 import Vue from 'vue'
+import router from '@/router'
 
 const api_url = apiUrl;
 
@@ -171,7 +172,7 @@ const utils = {
 
 };
 
-
+// 请求拦截器
 axios.interceptors.request.use(
   config => {
     config.timeout = 6000;
@@ -202,45 +203,51 @@ axios.interceptors.request.use(
 
     return Promise.reject(error)
   }
-)
+);
 
+
+//响应拦截器
 axios.interceptors.response.use(
   response => {
-
-    // 定时刷新access-token
-    // if (!response.data.value && response.data.data.message === 'token invalid') {
-    //   // 刷新token
-    //   store.dispatch('refresh').then(response => {
-    //     sessionStorage.setItem('access_token', response.data)
-    //   }).catch(error => {
-    //     throw new Error('token刷新' + error)
-    //   })
-    // }
-
-    if (response.status === 401) {
-      router.replace({
-      name: 'Login'
-    })
-  }
-if (response.status === 403) {
-  Vue.prototype.$message({
-    showClose: true,
-    message: '你没有操作权限',
-    type: 'warning'
-  })
-}
-
-if (response.status === 419) {
-  Vue.prototype.$message({
-    showClose: true,
-    message: '你的操作太频繁，请稍后再试',
-    type: 'warning'
-  })
-}
+    //   console.log(response);
+    //   // 定时刷新access-token
+    //   // if (!response.data.value && response.data.data.message === 'token invalid') {
+    //   //   // 刷新token
+    //   //   store.dispatch('refresh').then(response => {
+    //   //     sessionStorage.setItem('access_token', response.data)
+    //   //   }).catch(error => {
+    //   //     throw new Error('token刷新' + error)
+    //   //   })
+    //   // }
+    //
+    //
     return response
   },
   error => {
     if (error) {
+      if (error.response.status === 401) {
+        router.replace({
+          name: 'Login'
+        }).then(r => {
+          // console.log(r);
+        })
+      }
+      if (error.response.status === 403) {
+        Vue.prototype.$message({
+          showClose: true,
+          message: '你没有操作权限',
+          type: 'warning'
+        })
+      }
+
+      if (error.response.status === 419) {
+        Vue.prototype.$message({
+          showClose: true,
+          message: '你的操作太频繁，请稍后再试',
+          type: 'warning'
+        })
+      }
+
       Vue.prototype.$message({
         showClose: true,
         message: error,
@@ -251,8 +258,7 @@ if (response.status === 419) {
   }
 );
 
-
+// 基础url utils/apiUrl.js 文件设置
 axios.defaults.baseURL = `${api_url}/`;
-
 
 export default utils
