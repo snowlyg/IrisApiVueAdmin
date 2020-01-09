@@ -98,18 +98,19 @@
         if (this.$route.params.id) {
           this.loading = true
           const data = await utils.getRolesDetail(this.$route.params.id);
-          const data2 = await utils.getPermissions();
-          this.data = data2.data
-          this.ruleForm = data.data
+          const permissions = await utils.getPermissions();
+          this.data = permissions.data.data
+            let ruleForm = data.data.data;
+            this.ruleForm = ruleForm
 
-          if (data.data.Perms) {
-            data.data.Perms.forEach(e => {
+          if (ruleForm.Perms) {
+              ruleForm.Perms.forEach(e => {
               this.per_ids.push(e.ID)
             })
           }
         } else {
-          const data2 = await utils.getPermissions();
-          this.data = data2.data;
+          const permissions = await utils.getPermissions();
+          this.data = permissions.data.data;
           this.data.forEach(e => {
             this.per_ids.push(e.ID)
           })

@@ -75,7 +75,7 @@
       async getData() {
         this.loading = true;
         const data = await utils.getPermissionsDetail(this.$route.params.id);
-        this.ruleForm = data.data;
+        this.ruleForm = data.data.data;
         this.loading = false
       },
       //提交表单

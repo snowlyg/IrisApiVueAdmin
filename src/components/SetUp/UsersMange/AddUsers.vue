@@ -106,9 +106,9 @@
                     this.loading = true
                     const data = await utils.getAdminsDetail(this.$route.params.id);
                     await this.getRoles()
-                    this.ruleForm.Username = data.data.Username
-                    this.ruleForm.Name = data.data.Name
-                    this.ruleForm.RoleID = data.data.RoleID
+                    this.ruleForm.Username = data.data.data.Username;
+                    this.ruleForm.Name = data.data.data.Name;
+                    this.ruleForm.RoleID = data.data.data.RoleID;
 
                 } else {
                     await this.getRoles()
