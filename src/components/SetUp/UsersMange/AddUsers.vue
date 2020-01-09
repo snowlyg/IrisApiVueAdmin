@@ -135,37 +135,37 @@
       async postAdmins() {
         this.loading = true
         const data = await utils.postAdmins(this.ruleForm);
-        if (data.status) {
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
+            message: data.data.msg
           })
-          this.$router.push({
-            name: 'UsersMange'
+          await this.$router.push({
+              name: 'UsersMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false
       },
       async putAdmins() {
         this.loading = true
-        const data = await utils.putAdmins(this.ruleForm)
-        if (data.status) {
+        const data = await utils.putAdmins(this.ruleForm);
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
+            message: data.data.msg
           })
-          this.$router.push({
-            name: 'UsersMange'
+          await this.$router.push({
+              name: 'UsersMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false

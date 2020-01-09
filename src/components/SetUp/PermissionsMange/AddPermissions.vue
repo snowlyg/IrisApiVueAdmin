@@ -84,9 +84,9 @@
         this.$refs[formName].validate((valid) => {
           if (valid) {
             if (id) {
-              this.putPermissions()
+              this.putPermissions();
             } else {
-              this.postPermissions()
+              this.postPermissions();
             }
           } else {
             console.log('error submit!!');
@@ -97,37 +97,37 @@
       async postPermissions() {
         this.loading = true
         const data = await utils.postPermissions(this.ruleForm);
-        if (data.status) {
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
-          })
-          this.$router.push({
-            name: 'PermissionsMange'
+            message: data.data.msg
+          });
+          await this.$router.push({
+              name: 'PermissionsMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false
       },
       async putPermissions() {
-        this.loading = true
+        this.loading = true;
         const data = await utils.putPermissions(this.ruleForm);
-        if (data.status) {
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
+            message: data.data.msg
           })
-          this.$router.push({
-            name: 'PermissionsMange'
+          await this.$router.push({
+              name: 'PermissionsMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false

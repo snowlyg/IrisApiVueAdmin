@@ -138,18 +138,18 @@
         this.loading = true
         this.ruleForm.permissions_ids = this.$refs.tree.getCheckedKeys()
         const data = await utils.postRoles(this.ruleForm)
-        if (data.status) {
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
+            message: data.data.msg
           })
-          this.$router.push({
-            name: 'RoleMange'
+          await this.$router.push({
+              name: 'RoleMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false
@@ -158,18 +158,18 @@
         this.loading = true
         this.ruleForm.permissions_ids = this.$refs.tree.getCheckedKeys()
         const data = await utils.putRoles(this.ruleForm)
-        if (data.status) {
+        if (data.data.status) {
           this.$message({
             type: 'success',
-            message: data.msg
-          })
-          this.$router.push({
-            name: 'RoleMange'
+            message: data.data.msg
+          });
+          await this.$router.push({
+              name: 'RoleMange'
           })
         } else {
           this.$message({
             type: 'info',
-            message: data.msg
+            message: data.data.msg
           })
         }
         this.loading = false

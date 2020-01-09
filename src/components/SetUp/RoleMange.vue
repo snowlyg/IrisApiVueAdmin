@@ -74,109 +74,112 @@
 </template>
 
 <script>
-  import {mapActions, mapState} from 'vuex'
-  import utils from '@/utils'
+    import {mapActions, mapState} from 'vuex'
+    import utils from '@/utils'
 
-  export default {
-    components: {},
-    data() {
-      return {
-        loading: false,
-        tableProps: {
-          border: false, //去掉边框
-          stripe: false //去掉斑马纹
+    export default {
+        components: {},
+        data() {
+            return {
+                loading: false,
+                tableProps: {
+                    border: false, //去掉边框
+                    stripe: false //去掉斑马纹
+                },
+                customFilters: [{
+                    vals: '',
+                    props: ['DisplayName', 'Name'],
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }, {
+                    vals: []
+                }],
+                //分页设置
+                paginationDef: {
+                    pageSize: 10,
+                    pageSizes: [10, 20, 50]
+                },
+                dialogVisible: false,
+                save_id: null,
+                previewcol: false,
+                //存放弹出框的数据
+                colshowlog: {},
+            }
         },
-        customFilters: [{
-          vals: '',
-          props: ['DisplayName', 'Name'],
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }, {
-          vals: []
-        }],
-        //分页设置
-        paginationDef: {
-          pageSize: 10,
-          pageSizes: [10, 20, 50]
+        computed: {
+            ...mapState([
+                'RolesData'
+            ])
         },
-        dialogVisible: false,
-        save_id: null,
-        previewcol: false,
-        //存放弹出框的数据
-        colshowlog: {},
-      }
-    },
-    computed: {
-      ...mapState([
-        'RolesData'
-      ])
-    },
-    methods: {
-      ...mapActions([
-        'getRoles'
-      ]),
-      deletes(row) {
-        this.$confirm('真的要删除此角色吗？', '删除', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(async () => {
-          this.loading = true;
-          const data = await utils.deleteRoles(row.Id);
-          if (data.data.status) {
-            this.$message({
-              message: data.data.msg,
-              type: 'success'
-            })
-          } else {
-            this.$message.error(data.data.msg)
-          }
-          this.getData();
-          this.loading = false
-        }).catch(() => {
+        methods: {
+            ...mapActions([
+                'getRoles'
+            ]),
+            deletes(row) {
+                this.$confirm('真的要删除此角色吗？', '删除', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(async () => {
+                    this.loading = true;
+                    const data = await utils.deleteRoles(row.Id);
+                    if (data.data.status) {
+                        this.$message({
+                            message: data.data.msg,
+                            type: 'success'
+                        });
+                        await this.$router.push({
+                            name: 'RoleMange'
+                        })
+                    } else {
+                        this.$message.error(data.data.msg)
+                    }
+                    this.getData();
+                    this.loading = false
+                }).catch(() => {
 
-        })
-      },
-      details(scope) {
-        this.colshowlog = scope.row;
-        this.previewcol = true;
-      },
-      async getData(queryInfo) {
-        if (queryInfo) {
-          if (this.RolesData.length === 0) {
-            this.loading = true
-          }
-          this.RolesData.queryData = {
-            limit: queryInfo.pageSize,
-            offset: queryInfo.page,
-            name: this.customFilters[0].vals,
-          };
-          await this.getRoles(this.RolesData.queryData);
+                })
+            },
+            details(scope) {
+                this.colshowlog = scope.row;
+                this.previewcol = true;
+            },
+            async getData(queryInfo) {
+                if (queryInfo) {
+                    if (this.RolesData.length === 0) {
+                        this.loading = true
+                    }
+                    this.RolesData.queryData = {
+                        limit: queryInfo.pageSize,
+                        offset: queryInfo.page,
+                        name: this.customFilters[0].vals,
+                    };
+                    await this.getRoles(this.RolesData.queryData);
+                }
+                this.loading = false
+            },
+            goSeed() {
+                this.$router.push({
+                    name: 'AddRole'
+                })
+            },
+            edit(row) {
+                this.$router.push({
+                    name: 'EditRole',
+                    params: {
+                        id: row.Id
+                    }
+                })
+            }
+        },
+        mounted() {
+            this.getData()
         }
-        this.loading = false
-      },
-      goSeed() {
-        this.$router.push({
-          name: 'AddRole'
-        })
-      },
-      edit(row) {
-        this.$router.push({
-          name: 'EditRole',
-          params: {
-            id: row.Id
-          }
-        })
-      }
-    },
-    mounted() {
-      this.getData()
     }
-  }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

@@ -145,7 +145,7 @@
                     type: 'warning'
                 }).then(async () => {
                     this.loading = true;
-                    const data = await this.api.deletePermissions(row.Id);
+                    const data = await  utils.deletePermissions(row.Id);
                     if (data.data.status) {
                         this.$message({
                             message: data.data.msg,
@@ -154,6 +154,9 @@
                     } else {
                         this.$message.error(data.data.msg)
                     }
+                    await this.$router.push({
+                        name: 'PermissionsMange'
+                    })
                     this.getData();
                     this.loading = false
                 }).catch(() => {
