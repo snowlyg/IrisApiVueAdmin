@@ -22,7 +22,7 @@
             <div class="tree-box">
               <!--  :default-expanded-keys="[2, 3]" -->
               <!-- 默认展开的的节点 -->
-              <el-tree ref="tree" :data="data" show-checkbox node-key="ID" :props="defaultProps"
+              <el-tree ref="tree" :data="data" show-checkbox node-key="Id" :props="defaultProps"
                        :default-checked-keys="per_ids">
               </el-tree>
             </div>
