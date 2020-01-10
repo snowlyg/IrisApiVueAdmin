@@ -141,7 +141,7 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(async () => {
-                    this.loading = true
+                    this.loading = true;
                     const data = await utils.deleteAdmins(row.Id);
                     if (data.data.status) {
                         this.$message({
@@ -162,17 +162,24 @@
                 this.previewcol = true;
             },
             async getData(queryInfo) {
-                if (queryInfo) {
-                    if (this.AdminsData.length === 0) {
-                        this.loading = true
-                    }
-                    this.AdminsData.queryData = {
-                        limit: queryInfo.pageSize,
-                        offset: queryInfo.page,
-                        name: this.customFilters[0].vals,
-                    }
-                    await this.getAdmins(this.AdminsData.queryData);
+                if (this.AdminsData.length === 0) {
+                    this.loading = true
                 }
+
+                let limit = 1;
+                let offset = 10;
+                if (queryInfo) {
+                     limit = queryInfo.pageSize;
+                     offset = queryInfo.page;
+                }
+
+                this.AdminsData.queryData = {
+                    limit: limit,
+                    offset: offset,
+                    name: this.customFilters[0].vals,
+                };
+                await this.getAdmins(this.AdminsData.queryData);
+
                 this.loading = false
             },
             goSeed() {

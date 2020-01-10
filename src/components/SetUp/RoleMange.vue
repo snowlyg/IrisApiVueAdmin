@@ -146,17 +146,21 @@
                 this.previewcol = true;
             },
             async getData(queryInfo) {
-                if (queryInfo) {
-                    if (this.RolesData.length === 0) {
-                        this.loading = true
-                    }
-                    this.RolesData.queryData = {
-                        limit: queryInfo.pageSize,
-                        offset: queryInfo.page,
-                        name: this.customFilters[0].vals,
-                    };
-                    await this.getRoles(this.RolesData.queryData);
+                if (this.RolesData.length === 0) {
+                    this.loading = true
                 }
+                let limit = 1;
+                let offset = 10;
+                if (queryInfo) {
+                     limit = queryInfo.pageSize;
+                     offset = queryInfo.page;
+                }
+                this.RolesData.queryData = {
+                    limit: limit,
+                    offset: offset,
+                    name: this.customFilters[0].vals,
+                };
+                await this.getRoles(this.RolesData.queryData);
                 this.loading = false
             },
             goSeed() {

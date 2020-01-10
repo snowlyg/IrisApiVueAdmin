@@ -145,7 +145,7 @@
                     type: 'warning'
                 }).then(async () => {
                     this.loading = true;
-                    const data = await  utils.deletePermissions(row.Id);
+                    const data = await utils.deletePermissions(row.Id);
                     if (data.data.status) {
                         this.$message({
                             message: data.data.msg,
@@ -166,17 +166,23 @@
                 this.previewcol = true;
             },
             async getData(queryInfo) {
-                if (queryInfo) {
-                    if (this.PermissionsData.ListData.length === 0) {
-                        this.loading = true
-                    }
-                    this.PermissionsData.queryData = {
-                        limit: queryInfo.pageSize,
-                        offset: queryInfo.page,
-                        name: this.customFilters[0].vals,
-                    };
-                    await this.getPermissions(this.PermissionsData.queryData);
+                if (this.PermissionsData.ListData.length === 0) {
+                    this.loading = true
                 }
+                let limit = 1;
+                let offset = 10;
+                if (queryInfo) {
+                     limit = queryInfo.pageSize;
+                     offset = queryInfo.page;
+                }
+
+                this.PermissionsData.queryData = {
+                    limit: limit,
+                    offset: offset,
+                    name: this.customFilters[0].vals,
+                };
+                await this.getPermissions(this.PermissionsData.queryData);
+
 
                 this.loading = false
             },
