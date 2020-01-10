@@ -206,7 +206,7 @@
                         message: res.msg
                     });
                     this.$router.push({
-                        name: 'UsersMange'
+                        name: 'PermissionsMange'
                     })
                 } else {
                     this.$message({
