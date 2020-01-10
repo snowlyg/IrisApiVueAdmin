@@ -25,7 +25,7 @@
           </el-form-item>
 
 
-          <el-form-item label="选择角色" prop="RoleID" class="margin-left-lg margin-top must">
+          <el-form-item label="选择角色" prop="RoleIds" class="margin-left-lg margin-top must">
             <el-select v-model="ruleForm.RoleIds" multiple  placeholder="请选择角色">
               <el-option v-for="item,index in RolesData.ListData" :key="index" :label="item.DisplayName" :value="item.Id"/>
             </el-select>
@@ -53,7 +53,7 @@
                 } else {
                     callback()
                 }
-            }
+            };
             return {
                 data: [],
                 labelPosition: 'right',
@@ -62,7 +62,7 @@
                     Name: '',
                     Password: '',
                     RoleIds: '',
-                    ID: this.$route.params.id
+                    Id: this.$route.params.id
                 },
                 rules: {
                     Username: [{
