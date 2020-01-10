@@ -61,7 +61,7 @@
                     Username: '',
                     Name: '',
                     Password: '',
-                    RoleIds: '',
+                    RoleIds: [],
                     Id: this.$route.params.id
                 },
                 rules: {

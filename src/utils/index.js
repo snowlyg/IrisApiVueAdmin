@@ -101,16 +101,7 @@ const utils = {
   //登陆用户信息
   getUserProfile: () => axios.get(`v1/admin/users/profile`),
 
-  /*---------------- 设置 -----------------*/
-  //编辑用户
-  putAdmins: (form) => axios.put(`v1/admin/users/${form.Id}`, {
-    name: form.name,
-    email: form.email,
-    password: form.password,
-    username: form.username,
-    phone: form.phone,
-    role_ids: form.role_ids
-  }),
+
   //修改密码
   putUsersPassword: (form) => axios.put(`v1/admin/users/${form.Id}/password`, {
     password: form.password
@@ -158,6 +149,14 @@ const utils = {
   getAdmins: (datas) => axios.get(`v1/admin/users`, datas),
   //新建账号
   postAdmins: (form) => axios.post(`v1/admin/users`, {
+    password: form.Password,
+    name: form.Name,
+    username: form.Username,
+    role_ids: form.RoleIds,
+  }),
+  /*---------------- 设置 -----------------*/
+  //编辑用户
+  putAdmins: (form) => axios.put(`v1/admin/users/${form.Id}`, {
     password: form.Password,
     name: form.Name,
     username: form.Username,
