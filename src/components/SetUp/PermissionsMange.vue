@@ -19,7 +19,7 @@
           placeholder="搜索权限路由"
           class="class_input_width">
         </el-input>
-        <el-button type="primary" @click="goSeed">新建权限</el-button>
+<!--        <el-button type="primary" @click="goSeed">新建权限</el-button>-->
       </div>
     </div>
 
@@ -40,8 +40,8 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operation_box">
-              <span @click="edit(scope.row)">编辑</span>
-              <span @click="deletes(scope.row)">删除</span>
+<!--              <span @click="edit(scope.row)">编辑</span>-->
+<!--              <span @click="deletes(scope.row)">删除</span>-->
             </div>
           </template>
         </el-table-column>
