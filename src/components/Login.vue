@@ -66,10 +66,10 @@
                 }
                 this.loading = true
                 const data = await utils.getToken(this.Toform);
-                if (!data.status) {
+                if (!data.data.status) {
                     this.$message({
                         type: 'info',
-                        message: data.msg
+                        message: data.data.msg
                     })
                     this.loading = false
                     return false

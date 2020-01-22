@@ -99,7 +99,7 @@
 						form.password = this.ruleForm2.pass
 						const data = await utils.putUsersPassword(form);
 						this.$message({
-							message: data.msg,
+							message: data.data.msg,
 							type: 'success'
 						});
 						this.dialogTableVisible = false
