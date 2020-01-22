@@ -17,6 +17,11 @@
             <el-col class="margin-bottom">
               <el-button type="primary" class="loginBtn" @click="login" :loading="loading">登录</el-button>
             </el-col>
+
+            <el-col class="margin-bottom">
+             <p>演示账号： username</p>
+             <p>演示密码： password</p>
+            </el-col>
           </el-row>
         </div>
       </div>

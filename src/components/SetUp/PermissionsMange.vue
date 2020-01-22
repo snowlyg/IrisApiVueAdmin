@@ -19,7 +19,7 @@
           placeholder="搜索权限路由"
           class="class_input_width">
         </el-input>
-        <el-button type="primary" @click="goSeed">新建权限</el-button>
+<!--        <el-button type="primary" @click="goSeed">新建权限</el-button>-->
       </div>
     </div>
 
@@ -40,8 +40,8 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <div class="operation_box">
-              <span @click="edit(scope.row)">编辑</span>
-              <span @click="deletes(scope.row)">删除</span>
+<!--              <span @click="edit(scope.row)">编辑</span>-->
+<!--              <span @click="deletes(scope.row)">删除</span>-->
             </div>
           </template>
         </el-table-column>
@@ -145,7 +145,7 @@
                     type: 'warning'
                 }).then(async () => {
                     this.loading = true;
-                    const data = await  utils.deletePermissions(row.Id);
+                    const data = await utils.deletePermissions(row.Id);
                     if (data.data.status) {
                         this.$message({
                             message: data.data.msg,
@@ -166,17 +166,23 @@
                 this.previewcol = true;
             },
             async getData(queryInfo) {
-                if (queryInfo) {
-                    if (this.PermissionsData.ListData.length === 0) {
-                        this.loading = true
-                    }
-                    this.PermissionsData.queryData = {
-                        limit: queryInfo.pageSize,
-                        offset: queryInfo.page,
-                        name: this.customFilters[0].vals,
-                    };
-                    await this.getPermissions(this.PermissionsData.queryData);
+                if (this.PermissionsData.ListData.length === 0) {
+                    this.loading = true
                 }
+                let limit = 1;
+                let offset = 10;
+                if (queryInfo) {
+                     limit = queryInfo.pageSize;
+                     offset = queryInfo.page;
+                }
+
+                this.PermissionsData.queryData = {
+                    limit: limit,
+                    offset: offset,
+                    name: this.customFilters[0].vals,
+                };
+                await this.getPermissions(this.PermissionsData.queryData);
+
 
                 this.loading = false
             },
@@ -200,7 +206,7 @@
                         message: res.msg
                     });
                     this.$router.push({
-                        name: 'UsersMange'
+                        name: 'PermissionsMange'
                     })
                 } else {
                     this.$message({

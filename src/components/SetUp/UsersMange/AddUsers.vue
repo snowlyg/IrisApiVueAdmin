@@ -25,10 +25,9 @@
           </el-form-item>
 
 
-          <el-form-item label="选择角色" prop="RoleID" class="margin-left-lg margin-top must">
-            <el-select v-model="ruleForm.RoleID" placeholder="请选择角色">
-              <el-option v-for="item,index in RolesData.ListData" :key="index" :label="item.DisplayName"
-                         :value="item.Id"/>
+          <el-form-item label="选择角色" prop="RoleIds" class="margin-left-lg margin-top must">
+            <el-select v-model="ruleForm.RoleIds" multiple  placeholder="请选择角色">
+              <el-option v-for="item,index in RolesData.ListData" :key="index" :label="item.DisplayName" :value="item.Id"/>
             </el-select>
           </el-form-item>
 
@@ -54,7 +53,7 @@
                 } else {
                     callback()
                 }
-            }
+            };
             return {
                 data: [],
                 labelPosition: 'right',
@@ -62,8 +61,8 @@
                     Username: '',
                     Name: '',
                     Password: '',
-                    RoleID: '',
-                    ID: this.$route.params.id
+                    RoleIds: [],
+                    Id: this.$route.params.id
                 },
                 rules: {
                     Username: [{
@@ -81,7 +80,7 @@
                         validator: validatePass3,
                         trigger: 'blur'
                     }],
-                    RoleID: [{
+                    RoleIds: [{
                         required: true,
                         message: '请选择角色',
                         trigger: 'change'
@@ -108,7 +107,7 @@
                     await this.getRoles()
                     this.ruleForm.Username = data.data.data.Username;
                     this.ruleForm.Name = data.data.data.Name;
-                    this.ruleForm.RoleID = data.data.data.RoleID;
+                    this.ruleForm.RoleIds = data.data.data.RoleIds;
 
                 } else {
                     await this.getRoles()

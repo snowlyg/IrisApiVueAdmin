@@ -101,16 +101,7 @@ const utils = {
   //登陆用户信息
   getUserProfile: () => axios.get(`v1/admin/users/profile`),
 
-  /*---------------- 设置 -----------------*/
-  //编辑用户
-  putAdmins: (form) => axios.put(`v1/admin/users/${form.Id}`, {
-    name: form.name,
-    email: form.email,
-    password: form.password,
-    username: form.username,
-    phone: form.phone,
-    role_id: form.role_id
-  }),
+
   //修改密码
   putUsersPassword: (form) => axios.put(`v1/admin/users/${form.Id}/password`, {
     password: form.password
@@ -161,7 +152,15 @@ const utils = {
     password: form.Password,
     name: form.Name,
     username: form.Username,
-    role_id: form.RoleID,
+    role_ids: form.RoleIds,
+  }),
+  /*---------------- 设置 -----------------*/
+  //编辑用户
+  putAdmins: (form) => axios.put(`v1/admin/users/${form.Id}`, {
+    password: form.Password,
+    name: form.Name,
+    username: form.Username,
+    role_ids: form.RoleIds,
   }),
 
   //删除账号
@@ -181,13 +180,13 @@ axios.interceptors.request.use(
       config.headers = {
         'Authorization': token,
         'Accept': "application/json",
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       }
     }
     if (config.url === 'refresh') {
       config.headers = {
         'refresh-token': sessionStorage.getItem('refresh_token'),
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/json'
       }
     }
     return config
