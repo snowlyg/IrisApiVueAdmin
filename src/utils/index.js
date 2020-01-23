@@ -95,8 +95,8 @@ const utils = {
   },
   //登陆
   getToken: (item) => axios.post(`v1/admin/login`, {
-    Username: item.name,
-    Password: item.password
+    username: item.name,
+    password: item.password
   }),
   //登陆用户信息
   getUserProfile: () => axios.get(`v1/admin/users/profile`),
